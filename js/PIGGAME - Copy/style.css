@@ -1,0 +1,153 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:linear-gradient(to top left,  #753682 0% , #b22e34 100%);
+    color: #060606;
+    height: 100vh;
+    
+}
+
+.main{
+    /* position: relative;   */
+    width: 50rem;
+    height: 30rem;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(200px);
+    border-radius: 10px;
+    justify-content: center ;
+    align-items: center;
+    filter: blur();
+    text-transform: uppercase;
+    /* left:15% */
+
+}
+
+.player{
+    flex: 50%;
+    flex-direction: column;
+    display: flex;
+    /* flex-wrap: nowrap; */
+    /* white-space: nowrap; */
+    justify-content: center;
+    align-items: center;
+    padding: 142px  102.0px;
+    transition: all 0.7s;
+    margin: 0;
+    border-radius:10px ;
+
+}
+
+.playerActive {
+    background: rgba(255,255, 255, 0.3); 
+}
+
+.name {
+    position: relative;
+    top: -80px;;
+    font-weight: 600;
+}
+
+.totalScore{
+    position: relative;
+    top:-60px;
+    font-size: 30px;
+}
+
+
+.currentScore{
+    position: relative;
+    top:53px;
+    padding: 45.0px;
+    background: #b22e34;
+    color: aliceblue;
+    border-radius: 10px;
+    /* display: flex;    */
+   
+}
+
+.currentScoreBoard{
+    font-weight: bold;
+    font-size: 21px;
+    top:10px;
+    position: relative;
+    text-align: center;
+}
+
+
+.dice{
+    position: absolute;
+    left: 50%;
+    top:35%;
+    transform: translateX(-50%);
+    background-color: aliceblue;
+    z-index: 1;
+    width: 70px;
+    height:70px;
+}
+
+.btn{
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform:translateX(-50%);
+    padding:5px 14px;
+    background-color: rgba(255, 255, 255, 0.7);
+    
+    border-radius: 16px;
+    border: none;
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 500;
+    box-shadow: 2px 2px 5px 1px;
+}
+
+
+.btn:active{
+    position: absolute;
+    /* left:50%;
+    top:50%; */
+    transform:translate(-50%, 1.5px);
+    padding:5px 14px;
+    background-color: rgba(255, 255, 255, 0.7);
+    
+    border-radius: 16px;
+    border: 1px solid black;
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 500;
+    box-shadow: 2px 2px 5px 1px;  
+    transition: all 0.3s;  
+}
+
+.btnNewGame {
+    top:20%;
+
+}
+
+.btnRoll {
+    top:65%;
+}
+
+.btnHold {
+    top: 82%;
+}
+
+.hide {
+    display: none;
+}
+.winner {
+    background-color: green;
+}

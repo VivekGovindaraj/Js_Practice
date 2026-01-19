@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind CSS- Blog Landing Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- <style type="text/tailwindcss">
+      @theme {
+        --color-clifford: #da373d;
+      }
+    </style> -->
+
+</head>
+<body >
+
+    <!-- Navigation starts -->
+    <div class="container  bg-green-200 p-3 items-center justify-between m-0">
+     <!-- <h1 class="font-bold bg-red p-1 text-lg bg-red-500 justify-end">Blog -Landing Page</h1> -->
+      <nav class="flex justify-between items-center">
+        <div class="h-16 w-16">
+            <a href="#">
+                <img src="logo.png" alt="logo" class="rounded">
+            </a>
+           
+        </div>
+        <p class="text-xl font-bold font-serif md:me-100 ">Tailwind Css Landing Page</p>
+
+        <ul class="md:flex justify-between space-x-10 hidden ">
+            <li><a href="#" class="text-black hover:text-blue-500  font-medium">Services</a></li>
+            <li><a href="#" class="text-black hover:text-blue-500  font-medium">Pricing</a></li>
+            <li><a href="#" class="text-black hover:text-blue-500  font-medium">About</a></li>
+            <li><a href="#" class="text-black hover:text-blue-500  font-medium">Contact</a></li>
+        </ul>
+
+        <button class="hidden md:block cursor-pointer bg-green-500 px-5 py-2 rounded-full text-white hover:bg-blue-500 hover:text-white hover:cursor-pointer   font-medium ">Sign Up</button>
+        
+        <button class="md:hidden mobile-icon cursor-pointer">
+          <img src="./img/more.png" alt="more" class="h-10 w-10 me-3">
+        </button>
+
+      </nav>
+    </div>
+   
+    
+    <!-- Navigation ends -->
+
+    <!-- menu nav links for mobile -->
+      <div class="md:hidden lg:hidden xl:hidden mobile-menu">
+        <ul class="flex flex-col items-center justify-center space-y-4 ">
+          <li><a href="#" class="text-black hover:text-blue-500  font-medium">Services</a></li>
+          <li><a href="#" class="text-black hover:text-blue-500  font-medium">Pricing</a></li>
+          <li><a href="#" class="text-black hover:text-blue-500  font-medium">About</a></li>
+          <li><a href="#" class="text-black hover:text-blue-500  font-medium">Contact</a></li>
+          <li><button class="cursor-pointer bg-green-500 px-5 py-2 rounded-full text-white hover:bg-blue-500 hover:text-white hover:cursor-pointer   font-medium">Sign Up</button>
+          </li>
+      </ul>
+      </div>
+
+    <!-- menu nav links for mobile -->
+
+    <!-- herosection -->
+     <div class="container mx-auto mt-12 flex flex-col md:flex-row sm:gap-12">
+        <div class="md:w-1/2 text-center ">
+            <p  class="mt-6">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam magnam, est consectetur omnis perspiciatis accusantium fugit quis cumque laborum excepturi hic? Nesciunt nobis ducimus culpa at reiciendis voluptates id laboriosam.</p>
+            <button class="bg-blue-700 cursor-pointer text-white px-5 py-2 rounded-full mt-6 hover:cursor-pointer font-medium " >Get started</button>
+        </div>
+
+        <div class="md:w-1/2  ">
+            <img src="./img/herodesign.png" alt="randomImg" class="mx-auto h-40 w-85">
+        </div>
+     </div>
+
+
+     <!-- Main section starts -->
+      <div class="container flex flex-col md:flex-row mx-auto mt-20 space-x-10 sm:gap-12">
+
+        <div class="md:w-1/3  text-center flex flex-col items-center">
+          <h1 class="font-bold text-xl">Web Development</h1>
+          <img src="./img/webDeveloper.png" alt="webDeveloper" class="h-40 w-40" >
+          <p class="mt-5" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias dolor cum aspernatur quam consequuntur repellendus accusantium voluptatem in quia itaque sit non nesciunt impedit, et, atque voluptatum autem. Blanditiis, ut!</p>
+        
+        </div>
+
+        <div class="md:w-1/3 text-center flex flex-col items-center">
+          <h1 class="font-bold text-xl">Mobile App Development</h1>
+          <img src="./img/mobileAppDeveloper.png" alt="mobileAppDeveloper" class="h-40 w-40">
+          <p class="mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias dolor cum aspernatur quam consequuntur repellendus accusantium voluptatem in quia itaque sit non nesciunt impedit, et, atque voluptatum autem. Blanditiis, ut!</p>
+        
+        </div>
+
+
+        <div class="md:w-1/3 text-center flex flex-col items-center">
+          <h1 class="font-bold text-xl">Design Development</h1>
+          <img src="./img//desginer1.png" alt="desginer1" class="h-43 w-40">
+          <p class="mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias dolor cum aspernatur quam consequuntur repellendus accusantium voluptatem in quia itaque sit non nesciunt impedit, et, atque voluptatum autem. Blanditiis, ut!</p>
+        
+        </div>
+
+      </div>
+      <!-- Main section ends -->
+
+      <!-- Pricing sectionns -->
+
+      <div class="container mx-auto mt-15 mb-10 ">
+          <div class="text-center ">
+            <h1 class="font-bold text-xl text-blue-500">Pricing</h1>
+            <p class="text-lg ">Offers Multiple Packages for Monthlyand Yearly subscription</p>
+            <p class="text-lg">Feature Plans</p>
+
+          </div>
+
+          <div class="mt-6 grid md:grid-cols-3 sm:grid-cols-1 sm:mx-32 gap-4 mx-auto">
+
+            <div class="relative bg-gray-200 h-auto w-80 rounded-xl  hover:shadow-xl text-center pb-5 border border-3 border-blue-500 mt-6 ms-5">
+
+              <h1 class="font-bold text-3xl mt-2">$999</h1>
+
+              <h2 class="text-green-500 mb-3 text-xl font-bold mt-3">Basic</h2>
+
+              <p>All the basic are Included</p>
+
+              <ul class="ms-4">
+                <li class="flex items-center">
+                  <div class="mt-5">
+                    <img src="./img/check-box.png" alt="" class="h-6 w-6">
+                  </div>
+                  <div class="ms-3 mt-5">Core Bussiness System</div>
+                </li>
+              </ul>
+
+
+
+              <ul class="ms-4">
+                <li class="flex items-center">
+                  <div class="mt-5">
+                    <img src="./img/check-box.png" alt="" class="h-6 w-6">
+                  </div>
+                  <div class="ms-3 mt-5">Customized Features</div>
+                </li>
+              </ul>
+              
+
+              <ul class="ms-4">
+                <li class="flex items-center">
+                  <div class="mt-5">
+                    <img src="./img/check-box.png" alt="" class="h-6 w-6">
+                  </div>
+                  <div class="ms-3 mt-5">Dual Infa Structure</div>
+                </li>
+              </ul>
+
+              <button class="bg-blue-700 cursor-pointer text-white px-5 py-2 rounded-full mt-6 hover:cursor-pointer mt-4 font-medium " >Get started</button>
+
+              
+            </div>
+
+            <div class="bg-gray-200 h-auto w-80 rounded-xl  hover:shadow-xl text-center pb-5 border border-3 border-dashed ms-5 border-blue-500">
+
+              <h1 class="font-bold text-3xl mt-2">$1599</h1>
+
+              <h2 class="text-green-500 mb-3 text-xl font-bold mt-3">Advanced</h2>
+
+              <p>All the basic are Included</p>
+
+              <ul class="ms-4">
+                <li class="flex items-center">
+                  <div class="mt-5">
+                    <img src="./img/check-box.png" alt="" class="h-6 w-6">
+                  </div>
+                  <div class="ms-3 mt-5">Core Bussiness System</div>
+                </li>
+              </ul>
+
+
+              <ul  class="ms-4">
+                <li class="flex items-center">
+                  <div class="mt-5">
+                    <img src="./img/check-box.png" alt="" class="h-6 w-6">
+                  </div>
+                  <div class="ms-3 mt-5">Customized Features</div>
+                </li>
+              </ul>
+              
+
+              <ul  class="ms-4">
+                <li class="flex items-center">
+                  <div class="mt-5">
+                    <img src="./img/check-box.png" alt="" class="h-6 w-6">
+                  </div>
+                  <div class="ms-3 mt-5">Dual Infa Structure</div>
+                </li>
+              </ul>
+
+              <button class="bg-blue-700 cursor-pointer text-white px-5 py-2 rounded-full mt-6 hover:cursor-pointer font-medium " >Get started</button>
+
+              
+            </div>
+
+
+
+            <div class="bg-gray-200 h-auto w-80 rounded-xl  hover:shadow-xl text-center pb-5 border border-3 border-blue-500 mt-6 ms-5">
+
+              <h1 class="font-bold text-3xl mt-2">$1999</h1>
+
+              <h2 class="text-green-500 mb-3 text-xl font-bold mt-3">Bussiness</h2>
+
+              <p>All the basic are Included</p>
+
+              <ul  class="ms-4">
+                <li class="flex items-center">
+                  <div class="mt-5">
+                    <img src="./img/check-box.png" alt="" class="h-6 w-6">
+                  </div>
+                  <div class="ms-3 mt-5">Core Bussiness System</div>
+                </li>
+              </ul>
+
+
+              <ul  class="ms-4">
+                <li class="flex items-center">
+                  <div class="mt-5">
+                    <img src="./img/check-box.png" alt="" class="h-6 w-6">
+                  </div>
+                  <div class="ms-3 mt-5">Customized Features</div>
+                </li>
+              </ul>
+              
+
+              <ul  class="ms-4">
+                <li class="flex items-center">
+                  <div class="mt-5">
+                    <img src="./img/check-box.png" alt="" class="h-6 w-6">
+                  </div>
+                  <div class="ms-3 mt-5">Dual Infa Structure</div>
+                </li>
+              </ul>
+
+              <button class="bg-blue-700 cursor-pointer text-white px-5 py-2 rounded-full mt-6 hover:cursor-pointer font-medium " >Get started</button>
+
+              
+            </div>
+
+            
+           
+
+          </div>
+      </div>
+
+      
+      <!-- Pricing sectionns ends-->
+
+      <!-- story sectionns starts-->
+       <div class="container mx-auto mt-10 items-center pb-10 ">
+
+          <div class="text-center">
+            <h1>Recent Updates</h1>
+            <h1 class="text-3xl">Featured Stories</h1>
+          </div>
+
+          <div class="grid md:grid-cols-3 sm:grid-cols-1  gap-4 text-center mt-6 mb-6 pb-6">
+            <div class="bg-gray-200 rounded-2xl flex flex-col items-center  text-center hover:shadow-2xl">
+              <img src="https://picsum.photos/200/300" alt="" class="h-auto w-auto mt-5">
+              <h1 class="text-xl text-blue-500 mt-4">Google Rankings</h1>
+              <p class="text-thin my-4">Make it Connect it every client world wide.</p>
+              <a href="" class="text-blue-500 font-bold hover:text-black pb-6">Read More</a>
+            </div>
+            <div class="bg-gray-200 rounded-2xl flex flex-col items-center  text-center hover:shadow-2xl"">
+              <img src="https://picsum.photos/200/300" alt="" class="h-auto w-auto mt-5">
+              <h1  class="text-xl text-blue-500 mt-4">Communication</h1>
+              <p class="text-thin my-4">Best Communication for the bussiness </p>
+              <a href="" class="text-blue-500 font-bold hover:text-black">Read More</a>
+
+            </div>
+            <div class="bg-gray-200 rounded-2xl flex flex-col items-center text-center hover:shadow-2xl">
+              <img src="https://picsum.photos/200/300" alt="" class="h-auto w-auto mt-5">
+              <h1  class="text-xl text-blue-500 mt-4">Remote Working</h1>
+              <p class="text-thin my-4">Remote connectivity  for consistent</p>
+              <a href="" class="text-blue-500 font-bold hover:text-black pb-6">Read More</a>
+
+            </div>
+          </div>
+       </div>
+      <!-- story sectionns ends-->
+
+      <!-- footer -->
+       <footer class="bg-gray-300 mt-16 h-auto">
+        <div class="container mx-auto flex flex-col md:flex-row  pt-20 sm:mt-20 space-x-5 pb-12 sm:mx-auto sm:gap-10">
+            <div class="w-1/4">
+              <p class="font-medium">Tailwind Landing Page</p>
+            </div>
+
+            <div class="w-1/2 flex flex-col md:flex-row space-x-5">
+
+              <div class="pe-20">
+                <h2 class="text-md font-bold">Links</h2>
+                <ul class="mt-2 space-y-2">
+                  <li><a href="#">Products</a></li>
+                  <li><a href="#">About</a></li>
+                </ul>
+              </div>
+
+              <div>
+                <h2 class="text-md font-bold">Links</h2>
+                <ul class="mt-2 space-y-2">
+                  <li><a href="#">Products</a></li>
+                  <li><a href="#">About</a></li>
+                </ul>
+              </div>
+
+
+              <div>
+                <h2 class="text-md font-bold">Links</h2>
+                <ul class="mt-2 space-y-2">
+                  <li><a href="#">Products</a></li>
+                  <li><a href="#">About</a></li>
+                </ul>
+              </div>
+             
+
+            </div>
+
+            <div class="w-1/4 flex flex-col md:flex-row  justify-end  gap-5" >
+              <button>
+                <img src="./img/facebook.png" alt="" class="h-10 w-10" >
+              </button>
+              <button>
+                <img src="./img/twitter.png" alt="" class="h-10 w-10" >
+              </button>
+              <button>
+                <img src="./img/instagram.png" alt="" class="h-10 w-10" >
+              </button>
+              <button>
+                <img src="./img/whatsapp.png" alt="" class="h-10 w-10" >
+              </button>
+
+              <!-- <button>
+                <img src="./img/threads.png" alt="" class="h-10 w-10" >
+              </button> -->
+
+              <button>
+                <img src="./img/telegram.png" alt="" class="h-10 w-10" >
+              </button>
+            </div>
+
+        </div>
+
+       </footer>
+      <!-- footer -->
+
+</body>
+</html>
+<script>
+  let mobicon = document.querySelector('.mobile-icon');
+  let mobmenu = document.querySelector('.mobile-menu');
+
+  mobicon.addEventListener('click', function(){
+   mobmenu.classList.toggle('hidden')
+  })
+
+</script>

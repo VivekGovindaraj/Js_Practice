@@ -1,0 +1,170 @@
+body{
+    background:black;
+    color: white;
+    /* position: absolute; */
+    position: relative;
+}
+h1{
+    color : white;
+
+    font-weight:bolder;
+    font-size: 33px;
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+}
+span.numbtwn {
+   
+   font-size: 25px;
+    width: 340px;
+    justify-content: end;
+    position: relative;
+    top:0;
+    left:975px
+   
+}
+.section1 {
+    width: auto;
+    height: 50px;
+}
+.section3{
+    width: 40%;
+    height: auto;
+    position: relative;
+    display: flex;
+}
+.section4{
+    width: auto;
+    height: auto;
+    position: relative;
+    display: flex;
+    table-layout: fixed;
+}
+.header{
+    width: auto;
+    height: 50px;
+}
+.playagaibutton {
+    position: relative;
+}
+.againBtn {
+    padding: 18px;
+    font-size: 20px;
+    border-radius: 5px;
+    justify-content: flex-start;
+    margin-top: 0px;
+    position:absolute;
+    top: 140px;
+    left:602px
+    
+}
+.againBtn:hover {
+
+    font-size: 22px;
+    background-color:rgb(236, 236, 17);
+    transition: all 0.4s ease;
+
+}
+
+
+.row{
+    display: flex;
+}
+.displayBoard1 {
+     font-size: 45px;
+     margin-top: 20px;
+     border: 2px solid white;
+     padding: 20px;
+     width: 150px;
+     height: 50px;
+     text-align: center;
+     color: white;
+     /* display: flex; */
+     justify-content: center;
+     margin-right: auto;
+     margin-left: auto;
+     
+}
+
+.txt {
+    border-radius: 5px;
+    width: 100px;
+    height: 40px;
+    border: 2px solid white;
+    color: white;
+    background-color: black;
+    text-align: center;
+    font-size: 20px;
+    position: relative;
+    top: 100px;
+    left:100px
+    
+}
+
+
+.checkbtn {
+    padding: 18px;
+    font-size: 20px;
+    border-radius: 5px;
+    justify-content: flex-start;
+    margin-top: 0px;
+    position: absolute;
+    top: 180px;
+    left:105px
+
+    
+}
+.checkbtn:hover{
+    padding: 19px;
+    font-size: 22px;
+    transition:all 0.2s ease;
+    color:rgb(17, 17, 16);
+    background-color:rgb(236, 236, 17);
+    border-radius: 0.5px solid rgba(236, 241, 240, 0.808)
+     ;
+}
+
+.displayBoard2 {
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 35px;
+    left: 980px;
+    
+    
+}
+/* .scorelabel {
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    
+} */
+
+.displayBoard3 {
+    position: absolute;
+    top:180px;
+    left: 980px;
+    font-size: 28px;
+    font-weight: bold;
+
+}
+
+.displayBoard4 {
+    position: absolute;
+    top:235px;
+    left: 980px;
+    font-size: 28px;
+    font-weight: bold;
+
+}
+/* .scorelabel {
+    font-size: 28px;
+    font-weight: bold;
+    
+
+} */
+
+
+
+
+

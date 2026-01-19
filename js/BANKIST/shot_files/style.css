@@ -1,0 +1,332 @@
+* {
+    margin:0;
+    padding:0;
+    box-sizing: inherit;
+}
+html {
+    box-sizing: border-box;
+
+}
+body {
+    height: 100vh !important;
+    /* width: 100vh; */
+    background: color #f3f3f3;
+    /* font-family: 'Poppins', sans-serif;   */
+ 
+}
+
+nav {
+    display : flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    position: relative;
+    height: 90px;
+    width: 100%;
+    box-shadow: 0px 0px 3px 0px;
+    
+
+}
+.welcomemsg {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px;
+    width: 300px;
+    
+}
+.logincontainer {
+    width:200px
+}
+.userinput {
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 30px;
+    width:100px;
+    text-align: center;
+}
+.logo {
+    width:70px;
+    height:70px;
+   
+}
+.logincontainer {
+    width:100px
+}
+.loginbtn {
+    /* position: absolute; */
+    /* position: relative; */
+    padding:8px 30px;
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 30px;
+    font-size: 15px;
+    color: white;
+    background-color: rgb(48, 48, 247);
+    box-shadow: 1px 1px 0px 1px;
+    cursor: pointer;
+    width:100px;
+}
+.loginbtn:hover {
+    /* position: absolute; */
+    /* transform: scale(1.051); */
+    padding:9px 31px;
+    border: 1px solid rgb(255, 236, 236);
+    border-radius: 30px;
+    font-size: 16px;
+    color: white;
+    background-color: rgb(18, 18, 182);
+    box-shadow: 1px 1px 0px 1px;
+    transition: all 0.8s;
+    cursor: pointer;
+}
+.login:active {
+    transform: scale(1.051);
+    width: 100px;
+    /* position: absolute; */
+    padding:8px 30px;
+    border: 1px solid rgb(10, 10, 10);
+    border-radius: 30px;
+    font-size: 15px;
+    color: white;
+    background-color: rgb(48, 48, 247);
+    /* transform: translateY(1.5px); */
+    transition: all 3s;
+    box-shadow: 1px 1px 0px 1px;
+    cursor: pointer;
+}
+.dashboard {
+    margin: 0.7rem 3rem;
+    max-width: 100rem;
+    position: relative;
+    display: grid;
+    grid-template-columns: 4fr 3fr;
+    grid-template-rows: auto repeat(3, 10rem) auto;
+    gap: 2rem;
+    transition: all 1s;
+}
+.balance {
+    grid-column: 1 / span 2; /* that means  first coloumn  colspan 2  one coloumn equal to 2 coloumn */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-left: 1.5rem;
+    margin-right:1.5rem;
+    /* margin-top :1 rem; */
+    margin-bottom:0.7 rem;
+
+    
+}
+.balancelabel{
+    font-size: 1.9rem; /* 1rem = 16px*/
+    font-weight: 700;
+}
+.date  {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0 10px 0 0;
+}
+.asof{
+    padding-top:5px;
+}
+.totalbalance {
+    font-size: 2.3rem;
+    font-weight: 600;
+}
+
+.movements {
+    grid-row: 2 / span 2;   /* coloumn 2 beacuse previously one coloumn created so its coloumn 2 . so this coloumn expand row wise 2 times grid-row means row wise expand grid coloumn means coloumn wise expand */
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: scroll;
+}
+.movementsrow {
+    padding: 1rem  4rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(217, 210, 210 );
+    
+    
+
+}
+.movementtype { 
+   font-size: 12px;
+   text-transform: uppercase;
+   font-weight: 500;
+   color:#fff;
+   border-radius: 16px;
+   margin-right:1.5rem ;
+   padding: 6px 1rem;
+   
+}
+.movementdate{
+    font-size: 16px;
+    font-weight: 500;
+
+}
+.movementvalue {
+    font-size: 16px;
+    margin-left: auto;
+}
+
+.movementtypedeposit{
+    background-image: linear-gradient(to top left , green ,green);
+
+}
+.movementtypewithdrawl {
+    background-image: linear-gradient(to top left, red , red);
+}
+
+
+/* summary */
+
+.summary-block{
+    grid-row: 4 ;  /* here already 3 coloumn created so now its fourth coloumn */
+}
+
+.summary{
+   /* grid-row: 4 / 5;  /* here already 3 coloumn created so now its fourth coloumn */
+    display: flex;
+    align-items: baseline;
+    margin-top: 0.5rem;
+    padding:0 3px;
+}
+.summarylabel {
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-right: 1rem;
+}
+.summaryvalue {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-right: 1rem;
+
+}
+.summaryvaluein {
+    color:green;
+    margin-right: 3rem;
+}
+.summaryvalueout{
+    color:red;
+    margin-right: 3rem;
+
+}
+.summaryinterest {
+    color: rgb(64, 238, 64);
+    margin-right: 3rem;
+}
+.btnsort {
+    padding:8px 30px;
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 30px;
+    font-size: 15px;
+    color: white;
+    background-color: rgb(48, 48, 247);
+    box-shadow: 1px 1px 0px 1px;
+    cursor: pointer;
+    /* width:100px; */
+}
+
+/* operation */
+
+
+.operation {
+    /* display:flex; */
+    padding-top: 1rem;
+    padding-left:3rem;
+    padding-right:3rem;
+    padding-bottom: 1rem;
+    border-radius: 12px;
+    height: 170px;
+    
+}
+.operationtransfer {
+    background-image: linear-gradient(to top left, #ffb003, #ffcb03 );
+}
+.operationloan {
+    background-image: linear-gradient(to top left,  #39b385, #9be15d);
+}
+.operationclose{
+    background-image: linear-gradient(to top left,#e52a5a, #ff585f);
+}
+
+.operationlabel {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.1rem;
+
+}
+
+.form{
+    display: grid;
+    grid-template-columns: 2.5fr 1.5fr 2.5fr;
+    grid-template-rows: auto auto;
+    gap: 6px 5px;
+}
+.formlabel {
+    font-size: 1.1rem;
+    text-align: center;
+    font-weight:800;
+}
+.forminput {
+     border-radius:14px;
+     font-size: 14px;
+     font-weight: 200;
+     padding: 8px;
+     border: 1px solid #c9c9c9cc;
+     text-align: center;
+     width:150px;
+     background-color: rgba(255,255,255,0.7);
+     
+}
+.forminput:focus {
+    border-radius:14px;
+     font-size: 14px;
+     font-weight: 200;
+     padding: 8px;
+     border: 1px solid #c9c9c9cc;
+     text-align: center;
+     width:150px;
+     background-color: rgba(255,255,255,1);
+     
+}
+.btn{
+    padding: 4px 16px;
+    border-radius: 1rem;
+    color: white;
+    background-color:rgb(48, 48, 247) ;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+.btn:active{
+    transform: scale(1.051);
+     padding: 4px 16px;
+    border-radius: 10px;
+    color: white;
+    background-color:rgb(48, 48, 247) ;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    box-shadow: 0.5px 1px 2px 1px black;
+}
+
+.logoutime{
+    padding: 0 0 6px;
+    margin-top:10px;
+    font-size: 19px;
+    text-align:right;
+    font-weight: 600;
+    /* margin-top: 50px; */
+}
+.mTop30{
+    margin-top: 30px;
+}
+.timmer{
+    font-weight: 700;
+}
+
+
+
+   

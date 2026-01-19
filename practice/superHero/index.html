@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avengers - ES5</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+   .img{
+      background: url('./8483.jpg') no-repeat;
+      background-size: cover;
+      max-height: 85dvh;
+    }
+
+    
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #heroList{
+      max-height: 335px !important;
+      overflow-y: scroll;
+    
+    }
+
+  </style>
+</head>
+<body class="bg-dark img">
+  <div class="container py-5 ">
+   
+
+    <form id="heroForm" class="row g-3 mb-4 shadow p-4 bg-white rounded-3">
+       <h1 class="mb-4 text-primary ">Avengers Database</h1>
+      <div class="col-md-3">
+        <input type="text" class="form-control" id="heroName" placeholder="Hero Name" required />
+      </div>
+      <div class="col-md-3">
+        <input type="number" class="form-control" id="heroPower" placeholder="Power Level" required />
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control" id="secretIdentity" placeholder="Secret Identity" required />
+      </div>
+       <div class="col-md-3">
+        <select name="" id="secretPower" class="form-control">
+          <option value="">--Select Seceret power--</option>
+          <option value="Flying">Flying</option>
+          <option value="Speed">Speed</option>
+          <option value="Invisible">Invisible</option>
+          <option value="Strong">Strong</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-success" type="submit" id="addHero">Add Hero</button>
+        <button class="btn btn-primary" type="button" id="sortUp" onclick="sortfunc( asc=true);">Sort up</button>
+        <button class="btn btn-primary" type="button" id="sortDown"  onclick="sortfunc(asc=false);">Sort Down</button>
+        <button class="btn btn-dark" type="button" id="togglethemeBtn" onclick="toggleTheme();">Toggle dark mode</button>
+      </div>
+    </form>
+
+    <div class=" row row-gap-3">
+
+      <div class="col-12">
+        <input type="text" name="" id="searchBox" class="form-control p-2" placeholder="Search">
+      </div>
+      <div class="col-12 list-container">
+        <ul class="list-group" id="heroList">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <strong>Code Man - Power : 7000</strong>
+                <br>
+                <small>Secert : No Need GPT</small>
+            </div>
+            <div>
+                <button class="btn btn-warning btn-sm" id="edit">Edit</button>
+                 <button class="btn btn-danger btn-sm" id="remove">Remove</button>
+            </div>
+        </li>
+    </ul>
+      </div>
+      
+    </div>
+
+    
+  </div>
+
+  <!-- <script src="./common.js"></script> -->
+  <script src="./commonES6.js"></script>
+  <!-- <script src="./blockscopePrac.js"></script> -->
+
+</body>
+</html>

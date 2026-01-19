@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>App Usage Cards - Bootstrap</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #f8fafc, #e2e8f0);
+      font-family: 'Inter', sans-serif;
+      padding: 40px;
+    }
+    .usage-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+    .usage-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+    .app-icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      background: #e0f2fe;
+      color: #0d6efd;
+      border-radius: 14px;
+      margin-bottom: 16px;
+    }
+    .usage-title {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+    .usage-count {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .usage-label {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    .trend {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-top: 12px;
+    }
+    .trend.up {
+      color: #198754;
+    }
+    .trend.down {
+      color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row g-4 justify-content-center">
+
+    <div class="col-md-6 col-lg-4">
+      <div class="usage-card">
+        <div class="app-icon"><i class="bi bi-lightning-charge-fill"></i></div>
+        <div class="usage-title">Focus Tracker</div>
+        <div class="usage-count">128</div>
+        <div class="usage-label">Times Used Today</div>
+        <div class="trend up">↑ 12.4% today</div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="usage-card">
+        <div class="app-icon bg-warning bg-opacity-25 text-warning"><i class="bi bi-activity"></i></div>
+        <div class="usage-title">Health Pro</div>
+        <div class="usage-count">94</div>
+        <div class="usage-label">Sessions Tracked</div>
+        <div class="trend down">↓ 5.1% today</div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="usage-card">
+        <div class="app-icon bg-success bg-opacity-25 text-success"><i class="bi bi-journal-text"></i></div>
+        <div class="usage-title">Note AI</div>
+        <div class="usage-count">62</div>
+        <div class="usage-label">Notes Created</div>
+        <div class="trend up">↑ 7.3% today</div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="usage-card">
+        <div class="app-icon bg-primary bg-opacity-25 text-primary"><i class="bi bi-music-note-beamed"></i></div>
+        <div class="usage-title">SonicX</div>
+        <div class="usage-count">109</div>
+        <div class="usage-label">Songs Played</div>
+        <div class="trend up">↑ 3.6% today</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+ 
