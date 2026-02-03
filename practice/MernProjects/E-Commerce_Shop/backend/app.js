@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/dbConfig.js';
 import productRoutes from './routes/productRoutes.js';
+import errorMiddleware from './middleware/error.js';
 
 dotenv.config({
     path:"backend/config/.env"
@@ -31,6 +32,8 @@ app.get('/', (req,res) => {
 })
 
 app.use('/api/v1/', productRoutes)
+
+app.use(errorMiddleware);
 
 
 //starting server 
