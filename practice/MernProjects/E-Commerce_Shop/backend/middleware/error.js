@@ -1,4 +1,5 @@
 
+//error middleware
 export default (err,req,res,next) => {
     let error = {
         statusCode :err.statusCode || 500,
