@@ -1,10 +1,18 @@
 import Product from "../models/product.js";
 import ErrorHandler from "../utils/errorHandler.js";
+import asyncHandler from "../middleware/asyncHandler.js";
+import APIFilters from "../utils/apiFilters.js";
 
 // get /api/v1/products
 export const getProducts = async(req,res) => {
 
-    let products = await Product.find();
+
+    // let products = await Product.find();
+
+    let apiFilters = new APIFilters(Product, req.query).search();
+    let products = await apiFilters.query;
+
+
 
     res.status(200).json({
         products
@@ -25,7 +33,7 @@ export const newProducts = async (req,res) => {
 
 // get single products by id /api/v1/products/:id
 
-export const getProductDetails= async (req,res, next) => {
+export const getProductDetails= asyncHandler( async (req,res, next) => {
 
     let getProduct = await Product.findById(req.params.id)
 
@@ -36,7 +44,7 @@ export const getProductDetails= async (req,res, next) => {
     res.status(200).json({
      getProduct
     })
-}
+});
 
 // Update product by id  /api/v1/admin/products/:id
 
