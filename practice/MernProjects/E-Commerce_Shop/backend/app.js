@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/dbConfig.js';
 import productRoutes from './routes/productRoutes.js';
+import authRoutes from "./routes/authRoutes.js"
 import errorMiddleware from './middleware/error.js';
 
 dotenv.config({
@@ -24,6 +25,8 @@ app.use(express.urlencoded({
     limit:"10mb"
 }))
 
+app.set('query parser', 'extended')
+
 
 app.get('/', (req,res) => {
     res.json({
@@ -31,7 +34,8 @@ app.get('/', (req,res) => {
     })
 })
 
-app.use('/api/v1/', productRoutes)
+app.use('/api/v1/', productRoutes);
+app.use('/api/v1/', authRoutes);
 
 app.use(errorMiddleware);
 
