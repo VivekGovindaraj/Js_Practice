@@ -9,11 +9,14 @@ export const getProducts = async(req,res) => {
 
     let resPerPage = 2;
     // let products = await Product.find();
+    console.log("req-user".req?.user)
 
     let apiFilters = new APIFilters(Product, req.query).search().filter();
     let products = await apiFilters.query;
 
     let filteredProductsCount = products.length;
+
+    
 
     apiFilters.pagination(resPerPage);
 

@@ -5,6 +5,7 @@ import connectDB from './config/dbConfig.js';
 import productRoutes from './routes/productRoutes.js';
 import authRoutes from "./routes/authRoutes.js"
 import errorMiddleware from './middleware/error.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config({
     path:"backend/config/.env"
@@ -20,6 +21,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({
     extended:true,
     limit:"10mb"
