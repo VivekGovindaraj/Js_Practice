@@ -35,6 +35,11 @@ export const getProducts = async(req,res) => {
 
 export const newProducts = async (req,res) => {
 
+   console.log("BODY:", req.body);
+    console.log("USER:", req.user);
+
+    req.body.user = req.user?._id;
+
     let newProduct = await Product.create(req.body);
 
     res.status(201).json({
