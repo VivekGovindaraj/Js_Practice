@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectDB from './config/dbConfig.js';
 import productRoutes from './routes/productRoutes.js';
 import authRoutes from "./routes/authRoutes.js"
+import orderRoute from './routes/orderRoute.js'
 import errorMiddleware from './middleware/error.js';
 import cookieParser from 'cookie-parser';
 
@@ -38,6 +39,7 @@ app.get('/', (req,res) => {
 
 app.use('/api/v1/', productRoutes);
 app.use('/api/v1/', authRoutes);
+app.use('/api/v1/', orderRoute);
 
 app.use(errorMiddleware);
 
