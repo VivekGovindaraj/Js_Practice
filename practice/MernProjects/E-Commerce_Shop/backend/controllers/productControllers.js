@@ -5,14 +5,18 @@ import APIFilters from "../utils/apiFilters.js";
 import product from "../models/product.js";
 
 // get /api/v1/products
-export const getProducts = async(req,res) => {
+export const getProducts = async(req,res,next) => {
 
     let resPerPage = 2;
     // let products = await Product.find();
     console.log("req-user".req?.user)
 
     let apiFilters = new APIFilters(Product, req.query).search().filter();
+
+   
+
     let products = await apiFilters.query;
+     
 
     let filteredProductsCount = products.length;
 
@@ -22,7 +26,7 @@ export const getProducts = async(req,res) => {
 
     products = await  apiFilters.query.clone();
 
-
+  
 
     res.status(200).json({
         products,
