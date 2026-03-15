@@ -2,14 +2,14 @@ import Product from "../models/product.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import APIFilters from "../utils/apiFilters.js";
-import product from "../models/product.js";
+
 
 // get /api/v1/products
 export const getProducts = async(req,res,next) => {
 
     let resPerPage = 2;
     // let products = await Product.find();
-    console.log("req-user".req?.user)
+    
 
     let apiFilters = new APIFilters(Product, req.query).search().filter();
 
@@ -56,14 +56,14 @@ export const newProducts = async (req,res) => {
 
 export const getProductDetails= asyncHandler( async (req,res, next) => {
 
-    let getProduct = await Product.findById(req.params.id)
+    let product = await Product.findById(req.params.id)
 
-    if(!getProduct) {
+    if(!product) {
         return next(new ErrorHandler("Product Not Found", 404))
     }
 
     res.status(200).json({
-     getProduct
+        product
     })
 });
 

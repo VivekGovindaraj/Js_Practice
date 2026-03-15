@@ -12,7 +12,7 @@ const Home = () => {
         if(isError){
            toast.error(error?.data?.message)
         }
-    })
+    },  [isError, error])
 
     if(isLoading){
         return ( <h5>Loading...</h5>)

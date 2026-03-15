@@ -1,5 +1,6 @@
 import React from 'react'
-
+import {Link} from 'react-router-dom'
+import ProductDetails from '../ProductDetails'
 
 const ProductItem = ({product}) => {
   return (
@@ -24,7 +25,7 @@ const ProductItem = ({product}) => {
                         <div id='no_of_reviews' className='pt-2 ps-2'>(0)</div>
                     </div>
                     <p className="card-text mt-2">{product.price}</p>
-                    <a href="#" id='view_btn' className='btn btn-block'>View Details</a>
+                    <Link to={`/product/${product._id}`} id='view_btn' className='btn btn-block'>View Details</Link>
                 </div>
             </div>
         </div>
