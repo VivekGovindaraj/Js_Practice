@@ -211,7 +211,7 @@ export const toggleFavourite = async(req,res) => {
 
     }catch(error){
 
-        req.status(500).json({
+        res.status(500).json({
             success:false,
             message:`server message`,
             error:error.message
@@ -240,7 +240,7 @@ export const getFavourites = async(req,res) => {
 
     }catch(error){
 
-        req.status(500).json({
+        res.status(500).json({
             success:false,
             message:`server message`,
             error:error.message
