@@ -1,4 +1,4 @@
-// movies
+  // movies
 
 let movies = [];
 
@@ -25,7 +25,7 @@ fetch(url, options)
     console.log("Nowplaying",json.results)
     let arr = json.results;
 
-    let randomNum = Math.floor(Math.random() * 19) + 1;
+    let randomNum = Math.floor(Math.random() * arr.length);
 
     movies.push(arr)
      

@@ -12,13 +12,13 @@
 
     .navbar-brand{
         border: 1px solid red;
-        padding: 8px 20px !important;
+        padding: 6px 16px !important;
         border-radius: 5px;
     }
 
      .navbar-brand:hover{
         border: 1px solid red;
-        padding: 8px 20px !important;
+        padding: 6px 16px !important;
         border-radius: 5px;
         background: linear-gradient(to right, black, black ,rgba(255,0,0, 0.8),) !important;
         color: white !important;
@@ -31,32 +31,56 @@
 
     .nav-link{
         color: #ffffff;
-        margin:10px 20px;
+        margin:5px 8px;
         background-color: rgb(0, 0, 0);
         border-radius: 12px !important;
-        padding: 6px 20px !important;
+        padding: 6px 16px !important;
         align-items: center !important;
     }
 
     .nav-link:hover{
-        margin:10px 20px;
+        margin:5px 8px;
         color: #ffffff;
         background-color: red;
         border-radius: 12px !important;
-        padding: 6px 20px !important;
+        padding: 6px 16px !important;
         transition: all 0.2s ease-in-out;
     }
 
+    .navbar-nav{
+    flex-wrap:nowrap;
+    }
+
     .active{
-         margin:10px 20px;
+         margin:5px 8px;
         color: #ffffff !important;
         background-color: red;
         border-radius: 12px !important;
-        padding: 6px 20px !important;
+        padding: 6px 16px !important;
     }
 
-    .searchBox{
-       max-width:400px ;
+      .searchBox{
+      max-width:250px;
+      width:100%;
+    }
+
+    @media(max-width:992px){
+
+      .navbar-nav{
+          text-align:center;
+          margin-top:15px;
+          flex-wrap:wrap;
+      }
+
+      .nav-link{
+          margin:8px 0;
+      }
+
+      .searchBox{
+          max-width:100%;
+          margin-top:10px;
+      }
+
     }
 
     .banner-container{
@@ -129,7 +153,7 @@
       width: 160px;
       object-fit: cover;
       margin-right: 20px;
-      transition:transform 1.5s ease-in-out 0.9s !important;
+      transition: transform 0.3s ease;
       display: inline-block;
       border-radius: 5px;
       cursor: pointer !important;
@@ -137,7 +161,7 @@
 
     .movie-poster:hover{
         
-       transition: transfrom 3s ease-in-out !important;
+       transition: transform 3s ease-in-out;
       transform: scale(1.1) !important;
       cursor: pointer !important;
      
@@ -191,12 +215,11 @@
 
     /* modal */
 
-    .modal{
-      background-color: rgba(black,black,black, 0.25) !important;
-     
+   .modal{
+   background-color: rgba(black,black,black,0.25) !important;
     }
     .modal-content{
-      background-color: rgba(black,black,black, 0.25) !important;
+      background-color: rgba(black,black,black,0.25) !important;
     }
 
     .modal-header{
@@ -214,13 +237,12 @@
     }
 
     .modal-img{
-      margin: 0px;
-      padding: 0px;
+      width:100%;
+      height:auto;
+      object-fit:cover;
       background-repeat: no-repeat;
-      background-size: cover;
-      /* height: 500px; */
-      width: 360px;
-    }
+      border-radius:10px;
+  }
 
     .bi-star-fill{
       font-size: 20px !important;
@@ -241,6 +263,23 @@ div.pageimg img {
       cursor: pointer !important;
       margin-bottom: 40px;
       ;
+
+}
+
+@media(max-width:768px){
+
+   .movieTitle{
+      font-size:1.5rem;
+      margin-top:15px;
+   }
+
+   .movieOverview{
+      font-size:14px;
+   }
+
+   .modal-body{
+      padding:15px;
+   }
 
 }
 
