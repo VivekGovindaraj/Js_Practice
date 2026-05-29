@@ -30,25 +30,30 @@ fetch(url, options)
     movies.push(arr)
      
 
-    arr.forEach((obj) =>{
-      debugger;
-      
-      document.querySelector('.nowPlaying').innerHTML += `<img src="https://image.tmdb.org/t/p/w500${obj.poster_path}" class="movie-poster" alt="" data-bs-toggle="modal" data-bs-target="#myModal" >`
-     
-    } )
+ const nowPlayingContainer = document.querySelector('.nowPlaying');
 
-     document.querySelector('.banner-container').style.backgroundImage = `url('https://image.tmdb.org/t/p/w300${json.results[randomNum].backdrop_path}')`;
-       document.querySelector('.banner-movie-title').innerHTML = `${json.results[randomNum].original_title}`
+  if(nowPlayingContainer){
 
+    arr.forEach((obj)=>{
 
-      document.querySelectorAll('.movie-poster').forEach( (card, index) =>{
-        
+        nowPlayingContainer.innerHTML += `
 
-        card.addEventListener('click', function(){
-          
-          modalFunc(arr[index])
-        })
-      })
+        <div class="col-4 col-sm-3 col-lg-2">
+
+          <img
+              src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
+              class="movie-card "
+              alt="${obj.original_title}"
+              data-bs-toggle="modal"
+              data-bs-target="#myModal">
+
+        </div>
+
+        `;
+
+    });
+
+}
 
 
   }
@@ -93,13 +98,33 @@ fetch(popularUrl, popularoptions)
 
     movies.push(arr1);
 
-    arr1.forEach((obj) =>{
-      debugger;
-     
-      document.querySelector('.Popular').innerHTML += `<img src="https://image.tmdb.org/t/p/w500${obj.poster_path}" class="movie-poster1" alt="" data-bs-toggle="modal" data-bs-target="#myModal">`
-    } )
 
-    document.querySelectorAll('.movie-poster1').forEach( (card, index) =>{
+    const popular = document.querySelector('.Popular');
+
+if(popular){
+
+   arr1.forEach((obj)=>{
+
+      popular.innerHTML += `
+
+      <div class="col-4 col-sm-3 col-lg-2">
+
+         <img
+            src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
+            class="movie-card "
+            alt="${obj.original_title}"
+            data-bs-toggle="modal"
+            data-bs-target="#myModal">
+
+      </div>
+
+      `;
+
+   });
+
+}
+
+    document.querySelectorAll('.movie-card').forEach( (card, index) =>{
         
 
         card.addEventListener('click', function(){
@@ -140,13 +165,34 @@ fetch(topRatedUrl, topRatedoptions)
 
     movies.push(arr2);
 
-    arr2.forEach((obj) =>{
-      debugger;
-      
-      document.querySelector('.topRated').innerHTML += `<img src="https://image.tmdb.org/t/p/w500${obj.poster_path}" class="movie-poster2" alt=""   data-bs-toggle="modal" data-bs-target="#myModal">`
-    } )
+    
 
-     document.querySelectorAll('.movie-poster2').forEach( (card, index) =>{
+        const topRated = document.querySelector('.topRated')
+
+        if(topRated){
+
+          arr2.forEach((obj)=>{
+
+              topRated.innerHTML += `
+
+              <div class="col-4 col-sm-3 col-lg-2">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
+                    class="movie-card "
+                    alt="${obj.original_title}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#myModal">
+
+              </div>
+
+              `;
+
+          });
+
+}
+
+     document.querySelectorAll('.movie-card').forEach( (card, index) =>{
         
 
         card.addEventListener('click', function(){
@@ -154,6 +200,8 @@ fetch(topRatedUrl, topRatedoptions)
           modalFunc(arr2[index])
         })
       })
+
+
 
   }
  
@@ -188,15 +236,33 @@ fetch(upcomingUrl, upcomingoptions)
     movies.push(arr3);
 
 
-    
 
-    arr3.forEach((obj) =>{
-      debugger;
-     
-      document.querySelector('.upComing').innerHTML += `<img src="https://image.tmdb.org/t/p/w500${obj.poster_path}" class="movie-poster3" alt=""  data-bs-toggle="modal" data-bs-target="#myModal">`
-    } )
+        const upComing = document.querySelector('.upComing');
 
-     document.querySelectorAll('.movie-poster3').forEach( (card, index) =>{
+      if(upComing){
+
+        arr3.forEach((obj)=>{
+
+            upComing.innerHTML += `
+
+            <div class="col-4 col-sm-3 col-lg-2">
+
+              <img
+                  src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
+                  class="movie-card "
+                  alt="${obj.original_title}"
+                  data-bs-toggle="modal"
+                  data-bs-target="#myModal">
+
+            </div>
+
+            `;
+
+        });
+
+      }
+
+     document.querySelectorAll('.movie-card').forEach( (card, index) =>{
         
 
         card.addEventListener('click', function(){
@@ -208,17 +274,35 @@ fetch(upcomingUrl, upcomingoptions)
       // All Movies
       let Allmovies = movies.flat()
 
-    console.log(Allmovies)
     
-    Allmovies.forEach((obj) =>{
-      debugger;
-     
-      document.querySelector('.Allmovies').innerHTML += `<img src="https://image.tmdb.org/t/p/w500${obj.poster_path}" class="movie-poster3" alt=""  data-bs-toggle="modal" data-bs-target="#myModal">`
-    } )
+        const Allmovies1 = document.querySelector('.Allmovies');
+
+      if(Allmovies1){
+
+        Allmovies.forEach((obj)=>{
+
+            Allmovies1.innerHTML += `
+
+            <div class="col-4 col-sm-3 col-lg-2">
+
+              <img
+                  src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
+                  class="movie-card"
+                  alt="${obj.original_title}"
+                  data-bs-toggle="modal"
+                  data-bs-target="#myModal">
+
+            </div>
+
+            `;
+
+        });
+
+      }
 
 
 
-     document.querySelectorAll('.movie-poster3').forEach( (card, index) =>{
+     document.querySelectorAll('.movie-card').forEach( (card, index) =>{
         
 
         card.addEventListener('click', function(){
