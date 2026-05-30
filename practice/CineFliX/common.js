@@ -26,6 +26,13 @@ fetch(url, options)
     let arr = json.results;
 
     let randomNum = Math.floor(Math.random() * arr.length);
+    let randomMovie = arr[randomNum];
+
+    document.querySelector('.banner-container').style.backgroundImage =
+    `url(https://image.tmdb.org/t/p/w1280${randomMovie.backdrop_path})`;
+
+    document.querySelector('.banner-movie-title').innerText =
+    randomMovie.original_title;
 
     movies.push(arr)
      
