@@ -83,15 +83,36 @@
 
     }
 
-    .banner-container{
+    /* .banner-container{
         
         position: relative;
         background-position: center;
         background-size: cover;
         color: white;
-        height: 60vh;
+        height: 70vh;
         cursor: pointer;
-    }
+    } */
+
+    .banner-container{
+    position: relative;
+    height: 70vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.banner-container::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        #141414 5%,
+        rgba(20,20,20,0.3) 40%,
+        rgba(20,20,20,0.1) 100%
+    );
+}
 
     .banner-content{
         position: absolute;
@@ -159,13 +180,20 @@
 
 
     /* modal */
+    .modal-custom{
+    max-width: 900px;
+}
 
    .modal{
    background-color: rgba(black,black,black,0.25) !important;
     }
-    .modal-content{
-      background-color: rgba(black,black,black,0.25) !important;
-    }
+    .modal-content {
+  max-height: 80vh;
+  overflow: hidden; /* prevents ugly internal scroll */
+  border-radius: 16px;
+    background-color: rgba(black,black,black,0.25) !important;
+}
+   
 
     .modal-header{
       
@@ -173,6 +201,8 @@
     }
     .modal-body{
       border: none;
+      overflow-y:hidden; 
+  max-height: calc(90vh - 60px);
       
       
     }
@@ -187,15 +217,28 @@
 }
 
     .modal-img{
-       width:95%;
-      height:100%;
-      max-height:500px;
+      
+ width: 90%;
+  
+  height: 100%;
+ max-height:445px;
+ 
+
       object-fit:cover;
       background-repeat: no-repeat;
       background-size: cover;
       background-position: top center;
       border-radius:10px;
   }
+
+  .modal.fade .modal-dialog {
+  transform: scale(0.9);
+  transition: all 0.25s ease;
+}
+
+.modal.show .modal-dialog {
+  transform: scale(1);
+}
 
     .bi-star-fill{
       font-size: 20px !important;
@@ -219,6 +262,17 @@ div.pageimg img {
 
 } */
 
+@media (max-width: 576px) {
+  .modal-content {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .img-container img {
+    max-height: 40vh;
+  }
+}
+
 @media(max-width:768px){
 
    .movieTitle{
@@ -235,6 +289,9 @@ div.pageimg img {
    }
 
 }
+
+
+
 
 @media(max-width:768px){
 

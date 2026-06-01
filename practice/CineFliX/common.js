@@ -1,334 +1,479 @@
-  // movies
+//url
+
+let NowPlayingURL = `${CONFIG.BASE_URL}/movie/now_playing?api_key=${CONFIG.API_KEY}`;
+let PopularURL =   `${CONFIG.BASE_URL}/movie/popular?api_key=${CONFIG.API_KEY}`;
+let TopRatedURL =   `${CONFIG.BASE_URL}/movie/top_rated?api_key=${CONFIG.API_KEY}`;
+let UpComingURL =   `${CONFIG.BASE_URL}/movie/upcoming?api_key=${CONFIG.API_KEY}`;
+
+// fetch options
+
+const fetchOptions = {
+  method:"GET",
+  headers:{
+    accept:"application/json",
+    Authorization:`Bearer ${CONFIG.BEARER_TOKEN}`
+  }
+}
+
+// movies
 
 let movies = [];
 
+// MODAL FUNC
 
-// Now playing
+function modalFunc(movie) {
+
+  console.log(movie);
+
+  document.querySelector('.img-container').innerHTML = `
+    <img src="${CONFIG.IMAGE_URL}${movie.poster_path}"
+         class="modal-img"
+         alt="${movie.original_title}">
+  `;
+
+  document.querySelector('.movieTitle').textContent =
+    movie.original_title;
+
+  document.querySelector('.relasedYear').textContent =
+    `Year : ${movie.release_date ? movie.release_date.slice(0, 4) : 'N/A'}`;
+
+ const overview =
+movie.overview?.length > 180
+? movie.overview.slice(0,180) + "..."
+: movie.overview;
+
+document.querySelector('.movieOverview').textContent = overview;
+
+  document.querySelector('.movieRating').textContent =
+    movie.vote_average ?? 'N/A';
+
+  document.querySelector('.voteCount').textContent =
+    `Vote : ${movie.vote_count ?? 0}`;
+}
 
 
-const url = 'https://api.themoviedb.org/3/movie/now_playing?api_key=846cb286a5792c393751f1924a1adce2';
+//Banner Movie
 
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-       Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDZjYjI4NmE1NzkyYzM5Mzc1MWYxOTI0YTFhZGNlMiIsIm5iZiI6MTc1NDU4MDY5Mi45NDcsInN1YiI6IjY4OTRjNmQ0OTY1OWMyMjM2YWEzMmNiYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.p-f1A3dxTtTCquszklEJCjC9HDWzNdaEJ_MLMThW-eg'
+function BannerMovie(movie){
+  const bannerURL = `${CONFIG.BACKDROP_URL}${movie.backdrop_path}`
 
-  }
-};
+    const img = new Image();
 
-fetch(url, options)
-  .then(response => response.json())
-  .then(json => {
-    debugger;
+  img.onload = () => {
 
-    console.log("Nowplaying",json.results)
-    let arr = json.results;
+    document.querySelector(".banner-container").style.backgroundImage =
+      `url(${bannerURL})`;
 
-    let randomNum = Math.floor(Math.random() * arr.length);
-    let randomMovie = arr[randomNum];
+    document.querySelector(".banner-movie-title").textContent =
+      movie.original_title;
+  };
 
-    document.querySelector('.banner-container').style.backgroundImage =
-    `url(https://image.tmdb.org/t/p/w1280${randomMovie.backdrop_path})`;
+  img.src = bannerURL;
+}
 
-    document.querySelector('.banner-movie-title').innerText =
-    randomMovie.original_title;
+// movie renders
 
-    movies.push(arr)
-     
+function renderMovies (container, movies){
+  const containerAll = document.querySelector(`${container}`);
+  if(!containerAll) return;
 
- const nowPlayingContainer = document.querySelector('.nowPlaying');
+  containerAll.innerHTML = movies.map((movie) => {
 
-  if(nowPlayingContainer){
-
-    arr.forEach((obj)=>{
-
-        nowPlayingContainer.innerHTML += `
+   return `
 
         <div class="col-4 col-sm-3 col-lg-2">
 
           <img
-              src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
+              src="${CONFIG.IMAGE_URL}${movie.poster_path}"
               class="movie-card "
-              alt="${obj.original_title}"
+              alt="${movie.original_title}"
+              loading="lazy"
+              data-movie="${encodeURIComponent(JSON.stringify( movie))}"
               data-bs-toggle="modal"
               data-bs-target="#myModal">
 
         </div>
 
         `;
-
-    });
+  }).join("")
 
 }
 
 
-  }
+// event listeners for all cards
+
+document.addEventListener('click', (e) => {
+
+   const card = e.target.closest('.movie-card');
+
+  if (!card) return;
+
+
+   const movie = JSON.parse(
+    decodeURIComponent(card.dataset.movie)
+  );
+
+  modalFunc(movie);
+
+});
+
+// fetch all response 
+
+Promise.all([
+  fetch(NowPlayingURL,fetchOptions).then( res => res.json()),
+  fetch(PopularURL,fetchOptions).then( res => res.json()),
+  fetch(TopRatedURL,fetchOptions).then( res => res.json()),
+  fetch(UpComingURL,fetchOptions).then( res => res.json()),
+])
+.then(([nowPlaying,popularUrl,topRated,upcoming]) => {
+
+  const nowPlayingMovies = nowPlaying.results;
+  const popularMovies = popularUrl.results;
+  const topRatedMovies = topRated.results;
+  const upComingMovies = upcoming.results;
+
+  movies = [...nowPlayingMovies, ...popularMovies, ...topRatedMovies, ...upComingMovies]
+
+    const randomMovie =
+    nowPlayingMovies[
+      Math.floor(
+        Math.random() * nowPlayingMovies.length
+      )
+    ];
+
+    BannerMovie(randomMovie)
+
+    renderMovies(".nowPlaying",nowPlayingMovies)
+    renderMovies(".Popular", popularMovies)
+    renderMovies(".topRated", topRatedMovies)
+    renderMovies(".upComing", upComingMovies)
+    renderMovies(".AllMovies", movies)
+})
+.catch(error => {
+  console.error(`TMDB ERROR :`, error)
+})
+
+
+
+
+// // Now playing
+
+
+
+
+// const url = 
+
+// const options = {
+//   method: 'GET',
+//   headers: {
+//     accept: 'application/json',
+//        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDZjYjI4NmE1NzkyYzM5Mzc1MWYxOTI0YTFhZGNlMiIsIm5iZiI6MTc1NDU4MDY5Mi45NDcsInN1YiI6IjY4OTRjNmQ0OTY1OWMyMjM2YWEzMmNiYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.p-f1A3dxTtTCquszklEJCjC9HDWzNdaEJ_MLMThW-eg'
+
+//   } 
+// };
+
+// fetch(url, options)
+//   .then(response => response.json())
+//   .then(json => {
+//     debugger;
+
+//     console.log("Nowplaying",json.results)
+//     let arr = json.results;
+
+//     let randomNum = Math.floor(Math.random() * arr.length);
+//     let randomMovie = arr[randomNum];
+
+//     document.querySelector('.banner-container').style.backgroundImage =
+//     `url(https://image.tmdb.org/t/p/w1280${randomMovie.backdrop_path})`;
+
+//     document.querySelector('.banner-movie-title').innerText =
+//     randomMovie.original_title;
+
+//     movies.push(arr)
+     
+
+//  const nowPlayingContainer = document.querySelector('.nowPlaying');
+
+//   if(nowPlayingContainer){
+
+//     arr.forEach((obj)=>{
+
+//         nowPlayingContainer.innerHTML += `
+
+//         <div class="col-4 col-sm-3 col-lg-2">
+
+//           <img
+//               src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
+//               class="movie-card "
+//               alt="${obj.original_title}"
+//               data-bs-toggle="modal"
+//               data-bs-target="#myModal">
+
+//         </div>
+
+//         `;
+
+//     });
+
+// }
+
+
+//   }
     
-  )
+//   )
   
-  .catch(err => console.error(err));
-//
-
-function modalFunc(obj){
-  debugger;
-  console.log(obj)
-  document.querySelector('.img-container').innerHTML = `<img src="https://image.tmdb.org/t/p/w500${obj.poster_path}" class="modal-img" alt="">`
-  document.querySelector('.movieTitle').innerHTML = `${obj.original_title}`;
-  let year = obj.release_date.slice(0,4);
-  document.querySelector('.relasedYear').innerHTML = `Year : ${year}`;
-  document.querySelector('.movieOverview').innerHTML  = `${obj.overview}`;
-  document.querySelector('.movieRating').innerHTML = `${obj.vote_average}`; 
-  document.querySelector('.voteCount').innerHTML = `Vote : ${obj.vote_count}`; 
-}
-
-// popular content
-
-let popularUrl = 'https://api.themoviedb.org/3/movie/popular?api_key=846cb286a5792c393751f1924a1adce2';
-
-const popularoptions = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-       Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDZjYjI4NmE1NzkyYzM5Mzc1MWYxOTI0YTFhZGNlMiIsIm5iZiI6MTc1NDU4MDY5Mi45NDcsInN1YiI6IjY4OTRjNmQ0OTY1OWMyMjM2YWEzMmNiYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.p-f1A3dxTtTCquszklEJCjC9HDWzNdaEJ_MLMThW-eg'
-
-  }
-};
-
-fetch(popularUrl, popularoptions)
-  .then(response1 => response1.json())
-  .then(json1 => {
-    debugger;
-
-    console.log("popular",json1.results)
-    let arr1 = json1.results;
-
-    movies.push(arr1);
+//   .catch(err => console.error(err));
+// //
 
 
-    const popular = document.querySelector('.Popular');
 
-if(popular){
+// // popular content
 
-   arr1.forEach((obj)=>{
+// let popularUrl = 'https://api.themoviedb.org/3/movie/popular?api_key=846cb286a5792c393751f1924a1adce2';
 
-      popular.innerHTML += `
+// const popularoptions = {
+//   method: 'GET',
+//   headers: {
+//     accept: 'application/json',
+//        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDZjYjI4NmE1NzkyYzM5Mzc1MWYxOTI0YTFhZGNlMiIsIm5iZiI6MTc1NDU4MDY5Mi45NDcsInN1YiI6IjY4OTRjNmQ0OTY1OWMyMjM2YWEzMmNiYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.p-f1A3dxTtTCquszklEJCjC9HDWzNdaEJ_MLMThW-eg'
 
-      <div class="col-4 col-sm-3 col-lg-2">
+//   }
+// };
 
-         <img
-            src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
-            class="movie-card "
-            alt="${obj.original_title}"
-            data-bs-toggle="modal"
-            data-bs-target="#myModal">
+// fetch(popularUrl, popularoptions)
+//   .then(response1 => response1.json())
+//   .then(json1 => {
+//     debugger;
 
-      </div>
+//     console.log("popular",json1.results)
+//     let arr1 = json1.results;
 
-      `;
+//     movies.push(arr1);
 
-   });
 
-}
+//     const popular = document.querySelector('.Popular');
 
-    document.querySelectorAll('.movie-card').forEach( (card, index) =>{
+// if(popular){
+
+//    arr1.forEach((obj)=>{
+
+//       popular.innerHTML += `
+
+//       <div class="col-4 col-sm-3 col-lg-2">
+
+//          <img
+//             src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
+//             class="movie-card "
+//             alt="${obj.original_title}"
+//             data-bs-toggle="modal"
+//             data-bs-target="#myModal">
+
+//       </div>
+
+//       `;
+
+//    });
+
+// }
+
+//     document.querySelectorAll('.movie-card').forEach( (card, index) =>{
         
 
-        card.addEventListener('click', function(){
+//         card.addEventListener('click', function(){
           
-          modalFunc(arr1[index])
-        })
-      })
+//           modalFunc(arr1[index])
+//         })
+//       })
 
-  }
+//   }
  
-  )
+//   )
   
-  .catch(err => console.error(err));
+//   .catch(err => console.error(err));
 
 
-  //Top rated
+//   //Top rated
 
 
   
-let topRatedUrl = 'https://api.themoviedb.org/3/movie/top_rated?api_key=846cb286a5792c393751f1924a1adce2';
+// let topRatedUrl = 'https://api.themoviedb.org/3/movie/top_rated?api_key=846cb286a5792c393751f1924a1adce2';
 
-const topRatedoptions = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-       Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDZjYjI4NmE1NzkyYzM5Mzc1MWYxOTI0YTFhZGNlMiIsIm5iZiI6MTc1NDU4MDY5Mi45NDcsInN1YiI6IjY4OTRjNmQ0OTY1OWMyMjM2YWEzMmNiYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.p-f1A3dxTtTCquszklEJCjC9HDWzNdaEJ_MLMThW-eg'
+// const topRatedoptions = {
+//   method: 'GET',
+//   headers: {
+//     accept: 'application/json',
+//        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDZjYjI4NmE1NzkyYzM5Mzc1MWYxOTI0YTFhZGNlMiIsIm5iZiI6MTc1NDU4MDY5Mi45NDcsInN1YiI6IjY4OTRjNmQ0OTY1OWMyMjM2YWEzMmNiYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.p-f1A3dxTtTCquszklEJCjC9HDWzNdaEJ_MLMThW-eg'
 
-  }
-};
+//   }
+// };
 
-fetch(topRatedUrl, topRatedoptions)
-  .then(response2 => response2.json())
-  .then(json2 => {
-    debugger;
+// fetch(topRatedUrl, topRatedoptions)
+//   .then(response2 => response2.json())
+//   .then(json2 => {
+//     debugger;
 
-    console.log("toprated",json2.results)
-    let arr2 = json2.results;
+//     console.log("toprated",json2.results)
+//     let arr2 = json2.results;
 
-    movies.push(arr2);
+//     movies.push(arr2);
 
     
 
-        const topRated = document.querySelector('.topRated')
+//         const topRated = document.querySelector('.topRated')
 
-        if(topRated){
+//         if(topRated){
 
-          arr2.forEach((obj)=>{
+//           arr2.forEach((obj)=>{
 
-              topRated.innerHTML += `
+//               topRated.innerHTML += `
 
-              <div class="col-4 col-sm-3 col-lg-2">
+//               <div class="col-4 col-sm-3 col-lg-2">
 
-                <img
-                    src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
-                    class="movie-card "
-                    alt="${obj.original_title}"
-                    data-bs-toggle="modal"
-                    data-bs-target="#myModal">
+//                 <img
+//                     src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
+//                     class="movie-card "
+//                     alt="${obj.original_title}"
+//                     data-bs-toggle="modal"
+//                     data-bs-target="#myModal">
 
-              </div>
+//               </div>
 
-              `;
+//               `;
 
-          });
+//           });
 
-}
+// }
 
-     document.querySelectorAll('.movie-card').forEach( (card, index) =>{
+//      document.querySelectorAll('.movie-card').forEach( (card, index) =>{
         
 
-        card.addEventListener('click', function(){
+//         card.addEventListener('click', function(){
           
-          modalFunc(arr2[index])
-        })
-      })
+//           modalFunc(arr2[index])
+//         })
+//       })
 
 
 
-  }
+//   }
  
-  )
+//   )
   
-  .catch(err => console.error(err));
+//   .catch(err => console.error(err));
 
 
-  // upcoming
+//   // upcoming
 
 
     
-let upcomingUrl = 'https://api.themoviedb.org/3/movie/upcoming?api_key=846cb286a5792c393751f1924a1adce2';
+// let upcomingUrl = 'https://api.themoviedb.org/3/movie/upcoming?api_key=846cb286a5792c393751f1924a1adce2';
 
-const upcomingoptions = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-       Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDZjYjI4NmE1NzkyYzM5Mzc1MWYxOTI0YTFhZGNlMiIsIm5iZiI6MTc1NDU4MDY5Mi45NDcsInN1YiI6IjY4OTRjNmQ0OTY1OWMyMjM2YWEzMmNiYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.p-f1A3dxTtTCquszklEJCjC9HDWzNdaEJ_MLMThW-eg'
+// const upcomingoptions = {
+//   method: 'GET',
+//   headers: {
+//     accept: 'application/json',
+//        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDZjYjI4NmE1NzkyYzM5Mzc1MWYxOTI0YTFhZGNlMiIsIm5iZiI6MTc1NDU4MDY5Mi45NDcsInN1YiI6IjY4OTRjNmQ0OTY1OWMyMjM2YWEzMmNiYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.p-f1A3dxTtTCquszklEJCjC9HDWzNdaEJ_MLMThW-eg'
 
-  }
-};
+//   }
+// };
 
-fetch(upcomingUrl, upcomingoptions)
-  .then(response3 => response3.json())
-  .then(json3 => {
-    debugger;
+// fetch(upcomingUrl, upcomingoptions)
+//   .then(response3 => response3.json())
+//   .then(json3 => {
+//     debugger;
 
-    console.log("upcoming",json3.results)
-    let arr3 = json3.results;
+//     console.log("upcoming",json3.results)
+//     let arr3 = json3.results;
 
-    movies.push(arr3);
+//     movies.push(arr3);
 
 
 
-        const upComing = document.querySelector('.upComing');
+//         const upComing = document.querySelector('.upComing');
 
-      if(upComing){
+//       if(upComing){
 
-        arr3.forEach((obj)=>{
+//         arr3.forEach((obj)=>{
 
-            upComing.innerHTML += `
+//             upComing.innerHTML += `
 
-            <div class="col-4 col-sm-3 col-lg-2">
+//             <div class="col-4 col-sm-3 col-lg-2">
 
-              <img
-                  src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
-                  class="movie-card "
-                  alt="${obj.original_title}"
-                  data-bs-toggle="modal"
-                  data-bs-target="#myModal">
+//               <img
+//                   src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
+//                   class="movie-card "
+//                   alt="${obj.original_title}"
+//                   data-bs-toggle="modal"
+//                   data-bs-target="#myModal">
 
-            </div>
+//             </div>
 
-            `;
+//             `;
 
-        });
+//         });
 
-      }
+//       }
 
-     document.querySelectorAll('.movie-card').forEach( (card, index) =>{
+//      document.querySelectorAll('.movie-card').forEach( (card, index) =>{
         
 
-        card.addEventListener('click', function(){
+//         card.addEventListener('click', function(){
           
-          modalFunc(arr3[index])
-        })
-      })
+//           modalFunc(arr3[index])
+//         })
+//       })
 
-      // All Movies
-      let Allmovies = movies.flat()
+//       // All Movies
+//       let Allmovies = movies.flat()
 
     
-        const Allmovies1 = document.querySelector('.Allmovies');
+//         const Allmovies1 = document.querySelector('.Allmovies');
 
-      if(Allmovies1){
+//       if(Allmovies1){
 
-        Allmovies.forEach((obj)=>{
+//         Allmovies.forEach((obj)=>{
 
-            Allmovies1.innerHTML += `
+//             Allmovies1.innerHTML += `
 
-            <div class="col-4 col-sm-3 col-lg-2">
+//             <div class="col-4 col-sm-3 col-lg-2">
 
-              <img
-                  src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
-                  class="movie-card"
-                  alt="${obj.original_title}"
-                  data-bs-toggle="modal"
-                  data-bs-target="#myModal">
+//               <img
+//                   src="https://image.tmdb.org/t/p/w500${obj.poster_path}"
+//                   class="movie-card"
+//                   alt="${obj.original_title}"
+//                   data-bs-toggle="modal"
+//                   data-bs-target="#myModal">
 
-            </div>
+//             </div>
 
-            `;
+//             `;
 
-        });
+//         });
 
-      }
+//       }
 
 
 
-     document.querySelectorAll('.movie-card').forEach( (card, index) =>{
+//      document.querySelectorAll('.movie-card').forEach( (card, index) =>{
         
 
-        card.addEventListener('click', function(){
+//         card.addEventListener('click', function(){
           
-          modalFunc(Allmovies[index])
-        })
-      })
+//           modalFunc(Allmovies[index])
+//         })
+//       })
 
 
     
 
-  }
+//   }
  
-  )
+//   )
   
-  .catch(err => console.error(err));
+//   .catch(err => console.error(err));
 
 
-  // movies
+//   // movies
 
    
 
