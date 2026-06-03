@@ -62,7 +62,43 @@
       .searchBox{
       max-width:250px;
       width:100%;
+      position: relative;
     }
+
+    .searchDropdown {
+       position: absolute;
+       top: 100%;
+       right: 0;
+       width: 250px;
+       background-color: #2222;
+       border-radius: 8px;
+       z-index: 2000;
+       display: none;
+       max-width: 350px;
+       overflow-y: auto;
+    }
+
+    .search-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-item:hover{
+    background: #333;
+}
+
+.search-item img{
+    width: 40px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+
+
 
     @media(max-width:992px){
 
@@ -97,7 +133,7 @@
     position: relative;
     height: 70vh;
     background-size: cover;
-    background-position: center center;
+    background-position: top center;
     background-repeat: no-repeat;
     cursor: pointer;
 }
@@ -160,6 +196,22 @@
     }
 
 
+ .recommendedMovies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: none;
+  overflow: visible;
+}
+
+.recommended-card img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+
     .row-title {
       margin: 20px 0 10px 10px;
       font-size: 1.35rem;
@@ -187,11 +239,21 @@
    .modal{
    background-color: rgba(black,black,black,0.25) !important;
     }
-    .modal-content {
-  max-height: 80vh;
-  overflow: hidden; /* prevents ugly internal scroll */
-  border-radius: 16px;
-    background-color: rgba(black,black,black,0.25) !important;
+   .modal-content {
+    max-height: 90vh; 
+    overflow: hidden; 
+    border-radius: 16px;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.modal-body {
+    max-height: calc(90vh - 60px);
+    padding: 20px;
+    scroll-behavior: smooth;
+    border: none;
+    overflow-y:auto !important; 
+     max-height: calc(90vh - 60px);
+
 }
    
 
@@ -199,13 +261,7 @@
       
       border: none;
     }
-    .modal-body{
-      border: none;
-      overflow-y:hidden; 
-  max-height: calc(90vh - 60px);
-      
-      
-    }
+   
     .modal-footer{
       border: none;
     

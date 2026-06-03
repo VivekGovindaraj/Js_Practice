@@ -76,6 +76,7 @@
 
         </ul>
 
+       
         <!-- Search Box -->
         <div class="input-group searchBox mt-3 mt-lg-0">
 
@@ -83,10 +84,11 @@
             <i class="bi bi-search"></i>
           </span>
 
-          <input type="text" class="form-control border-start-0"  placeholder="Search...">
+          <input type="text" id="searchInput" class="form-control border-start-0"  placeholder="Search...">
 
         </div>
 
+        <div class="searchDropdown"></div>
       </div>
 
     </div>
@@ -117,8 +119,11 @@
 
 
    
+  
+   <!-- modal movie -->
+
    <div class="modal fade rounded-5 rounded-sm-2" id="myModal">
-    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-custom">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-custom ">
       <div class="modal-content bg-dark text-white">
 
       <!-- Modal Header -->
@@ -152,6 +157,9 @@
            </div>
         
         </div>
+
+         <h6 class="mt-4 recommendedMoviesTiltle hide">Recommended Movies</h6>
+        <div class="recommendedMovies d-flex flex-wrap gap-2 mt-2 "></div>
        
       </div>
 
@@ -163,6 +171,9 @@
     </div>
   </div>
 </div>
+
+<!-- modal ends-->
+
 
 
           
