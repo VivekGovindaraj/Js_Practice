@@ -26,6 +26,11 @@ let movies = [];
 
 async function fetchMovies() {
 
+   showSkeleton(".nowPlaying")
+    showSkeleton(".Popular")
+    showSkeleton(".topRated")
+    showSkeleton(".upComing")
+    // showSkeleton(".AllMovies")
 try{
   const everyfetchedMovies = await Promise.all([
   fetch(NowPlayingURL,fetchOptions).then( res => res.json()),
@@ -138,10 +143,25 @@ function BannerMovie(movie){
 
 // movie renders
 
+function showSkeleton(container) {
+
+  debugger;
+  const containerAll1 = document.querySelector(container);
+  if(!containerAll1) return;
+
+  let skeletonHTML = "";
+
+  for (let i = 0; i < 8; i++) {
+    skeletonHTML += `<div class="movie-skeleton"></div>`;
+  }
+
+  containerAll1.innerHTML = skeletonHTML;
+}
+
 function renderMovies (container, movies){
   const containerAll = document.querySelector(`${container}`);
   if(!containerAll) return;
-
+ 
   containerAll.innerHTML = movies.map((movie) => {
 
    return `
@@ -188,13 +208,17 @@ document.addEventListener('click', async (e) => {
 
   if (!movie) return;
 
-  const oldBackdrop = document.querySelector('.modal-backdrop');
-  if (oldBackdrop) oldBackdrop.remove();
+  
 
   await modalFunc(movie, showRecommend);
 
-  const modal = new bootstrap.Modal(document.getElementById('myModal'));
-  modal.show();
+  bootstrap.Modal.getOrCreateInstance(document.getElementById('myModal')).show();
+});
+
+document.getElementById('myModal').addEventListener('hidden.bs.modal', () => {
+  document.body.classList.remove('modal-open');
+  document.body.style.overflow = 'auto';
+  document.body.style.paddingRight = '';
 });
 
 // MODAL FUNC
@@ -293,8 +317,15 @@ function getRecommendedMoviesHTML(recommendedMovies) {
 }
 
 
+function scrollRow(btn, value) {
+  const wrapper = btn.closest(".movie-wrapper");
+  const row = wrapper.querySelector(".movie-row");
 
-
+  row.scrollBy({
+    left: value,
+    behavior: "smooth"
+  });
+}
 
 
 
