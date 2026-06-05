@@ -3,6 +3,10 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/dbConfig.js';
 import productRoutes from './routes/productRoutes.js';
+import authRoutes from "./routes/authRoutes.js"
+import orderRoute from './routes/orderRoute.js'
+import errorMiddleware from './middleware/error.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config({
     path:"backend/config/.env"
@@ -18,10 +22,13 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({
     extended:true,
     limit:"10mb"
 }))
+
+app.set('query parser', 'extended')
 
 
 app.get('/', (req,res) => {
@@ -30,7 +37,11 @@ app.get('/', (req,res) => {
     })
 })
 
-app.use('/api/v1/', productRoutes)
+app.use('/api/v1/', productRoutes);
+app.use('/api/v1/', authRoutes);
+app.use('/api/v1/', orderRoute);
+
+app.use(errorMiddleware);
 
 
 //starting server 

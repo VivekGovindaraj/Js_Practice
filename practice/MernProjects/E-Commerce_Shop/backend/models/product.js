@@ -4,17 +4,17 @@ const productSchema = new mongoose.Schema({
 
     name:{
         type:String,
-        requried:[true,"Please Enter your Name"],
-        maxlength:[200,,'Product name cant exceed more than 200 characters']
+        required:[true,"Please Enter your Name"],
+        maxlength:[200,'Product name cant exceed more than 200 characters']
     },
     price:{
         type:Number,
-        requried:[true,"Please enter product price"],
-        maxlength:[5,"Product price cant exceed more than 5 characters"]
+        required:[true,"Please enter product price"],
+        maxlength:[10,"Product price cant exceed more than 5 characters"]
     },
     description:{
         type:String,
-        requried:[true,"Please enter product description"]
+        required:[true,"Please enter product description"]
     },
     rating:{
         type:Number,
@@ -24,17 +24,17 @@ const productSchema = new mongoose.Schema({
         {
             public_id:{
                 type:String,
-                requried:false
+                required:false
             },
             url:{
                 type:String,
-                requried:false
+                required:false
             }
         }
     ],
     category:{
         type:String,
-        requried:[true, 'Please enter product category'],
+        required:[true, 'Please enter product category'],
         enum:{
             values:[
                 "Electronics",
@@ -52,7 +52,7 @@ const productSchema = new mongoose.Schema({
     },
     seller:{
         type:String,
-        requried:[true,"Please enter product seller"]
+        required:[true,"Please enter product seller"]
     },
     stock:{
             type:Number,
@@ -79,11 +79,11 @@ const productSchema = new mongoose.Schema({
                 }
             }
         ],
-        // user:{
-        //     type:mongoose.Schema.Types.ObjectId,
-        //     ref:"User",
-        //     required:true
-        // }
+        user:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User",
+            required:true
+        }
     
 },{timestamps:true});
 
