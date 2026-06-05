@@ -38,7 +38,7 @@ const Home = () => {
     console.log(thoughts)
   },[dispatch])
 
-
+  console.log("Thoughts:", thoughts);
   // Get unique tags from all thoughts
 
   const getAllTags = () => {
@@ -46,7 +46,7 @@ const Home = () => {
     let tagsSet = new Set();
 
     thoughts.forEach((thought) => {
-      thought.tags.forEach((tag) => {
+      thought.tags?.forEach((tag) => {
         tagsSet.add(tag)
       })    
     });
@@ -173,7 +173,7 @@ let handleClearFilters = () => {
            <Loader2 className='h-8 w-8 animate-spin text-primary'/>
         </div>
       )}
-
+   
       
       {!loading && thoughts.length == 0 && (
     

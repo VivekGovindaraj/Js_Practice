@@ -87,7 +87,7 @@ import { act } from 'react';
     "thoughts/getFavouriteThoughts",
     async(_, {rejectWithValue}) => {
         try{
-          let response= await API.fetchFavourites(id);
+          let response= await API.fetchFavourites();
             return response.data;
         }catch(error){
             return rejectWithValue(error.response.data)
@@ -155,12 +155,12 @@ let initialState = {
         builder
         .addCase(getThoughts.pending, (state) => {
           
-            state.loading =true,
-            state.error = null
+            state.loading =true;
+            state.error = null;
         })
         .addCase(getThoughts.fulfilled, (state, action)=>{
             // console.log(action.payload.data)
-            state.loading = false,
+            state.loading = false;
             state.thoughts = action.payload.data;
         })
        
@@ -172,16 +172,16 @@ let initialState = {
 
         // create Thoughts
         .addCase( createNewThought.pending , (state) =>{
-            state.loading = true,
-            state.error = null
+            state.loading = true;
+            state.error = null;
         })
         .addCase(createNewThought.fulfilled, (state,action)=> {
-            state.loading = false,
-            state.thoughts.unshift(action.payload.data)
+            state.loading = false;
+            state.thoughts.unshift(action.payload.data);
         })
         .addCase(createNewThought.rejected , (state,action) => {
-            state.loading=flase,
-            state.error = action.payload
+            state.loading=false;
+            state.error = action.payload;
         })
 
         // update thought
