@@ -4,6 +4,7 @@ let NowPlayingURL = `${CONFIG.BASE_URL}/movie/now_playing?api_key=${CONFIG.API_K
 let PopularURL =   `${CONFIG.BASE_URL}/movie/popular?api_key=${CONFIG.API_KEY}`;
 let TopRatedURL =   `${CONFIG.BASE_URL}/movie/top_rated?api_key=${CONFIG.API_KEY}`;
 let UpComingURL =   `${CONFIG.BASE_URL}/movie/upcoming?api_key=${CONFIG.API_KEY}`;
+// let RecomendedURL =   `${CONFIG.BASE_URL}/movie/recommendations?api_key=${CONFIG.API_KEY}`;
 
 // fetch options
 
@@ -19,9 +20,210 @@ const fetchOptions = {
 
 let movies = [];
 
+
+
+// fetch all response 
+
+async function fetchMovies() {
+
+   showSkeleton(".nowPlaying")
+    showSkeleton(".Popular")
+    showSkeleton(".topRated")
+    showSkeleton(".upComing")
+    // showSkeleton(".AllMovies")
+try{
+  const everyfetchedMovies = await Promise.all([
+  fetch(NowPlayingURL,fetchOptions).then( res => res.json()),
+  fetch(PopularURL,fetchOptions).then( res => res.json()),
+  fetch(TopRatedURL,fetchOptions).then( res => res.json()),
+  fetch(UpComingURL,fetchOptions).then( res => res.json())
+  // fetch(RecomendedURL,fetchOptions).then( res => res.json()),
+])
+
+const [nowPlaying,popularUrl,topRated,upcoming] = everyfetchedMovies
+  
+
+
+  const nowPlayingMovies = nowPlaying.results;
+  const popularMovies = popularUrl.results;
+  const topRatedMovies = topRated.results;
+  const upComingMovies = upcoming.results;
+  // const recomendedMovies = upcoming.results;
+
+  movies = [...nowPlayingMovies, ...popularMovies, ...topRatedMovies, ...upComingMovies]
+
+    const randomMovie =
+    nowPlayingMovies[
+      Math.floor(
+        Math.random() * nowPlayingMovies.length
+      )
+    ];
+
+    if(document.querySelector('.banner-container')){
+      BannerMovie(randomMovie)
+    }
+
+    renderMovies(".nowPlaying",nowPlayingMovies)
+    renderMovies(".Popular", popularMovies)
+    renderMovies(".topRated", topRatedMovies)
+    renderMovies(".upComing", upComingMovies)
+    renderMovies(".AllMovies", movies)
+    // getRecommendedMoviesHTML('recommendedMovies', recomendedMovies)
+} 
+  
+ catch (error) {
+  console.error(`TMDB ERROR :`, error)
+}
+}
+
+fetchMovies() // fetch function all movie call
+
+
+// search input function
+const searchInput = document.querySelector('#searchInput');
+const serachDropdown = document.querySelector(".searchDropdown")
+
+
+searchInput.addEventListener('keyup', function(){
+
+  debugger;
+
+  let searchedTxt = searchInput.value.toLowerCase().trim()
+
+  if(searchedTxt.length < 2){
+   serachDropdown.style.display="none"
+   return
+  }
+
+  let uniqueMovies = [...new Map((
+    movies.map(movie => [movie.id, movie])
+  )).values()]
+
+  let filteredMovie = uniqueMovies.filter( (movie) =>{
+
+   return  movie.title?.toLowerCase().includes(searchedTxt) || movie.original_title?.toLowerCase().includes(searchedTxt)
+  })
+
+  serachDropdown.innerHTML = filteredMovie.map((movie) => {
+
+ return `
+  <div class="search-item" data-movie="${encodeURIComponent(JSON.stringify(movie))}"> 
+
+    <img src="${CONFIG.IMAGE_URL}${movie.poster_path}" alt="movie">
+    <span>${movie.original_title}</span>
+   </div>
+  
+  `
+  }).join("")
+
+  serachDropdown.style.display="block";
+
+})
+
+
+
+//Banner Movie
+
+function BannerMovie(movie){
+  const bannerURL = `${CONFIG.BACKDROP_URL}${movie.backdrop_path}`
+
+    const img = new Image();
+
+  img.onload = () => {
+
+    document.querySelector(".banner-container").style.backgroundImage =
+      `url(${bannerURL})`;
+
+    document.querySelector(".banner-movie-title").textContent =
+      movie.original_title;
+  };
+
+  img.src = bannerURL;
+}
+
+// movie renders
+
+function showSkeleton(container) {
+
+  debugger;
+  const containerAll1 = document.querySelector(container);
+  if(!containerAll1) return;
+
+  let skeletonHTML = "";
+
+  for (let i = 0; i < 8; i++) {
+    skeletonHTML += `<div class="movie-skeleton"></div>`;
+  }
+
+  containerAll1.innerHTML = skeletonHTML;
+}
+
+function renderMovies (container, movies){
+  const containerAll = document.querySelector(`${container}`);
+  if(!containerAll) return;
+ 
+  containerAll.innerHTML = movies.map((movie) => {
+
+   return `
+
+        <div class="col-4 col-sm-3 col-lg-2">
+
+          <img
+              src="${CONFIG.IMAGE_URL}${movie.poster_path}"
+              class="movie-card "
+              alt="${movie.original_title}"
+              loading="lazy"
+              data-movie="${encodeURIComponent(JSON.stringify( movie))}"
+              data-bs-toggle="modal"
+              data-bs-target="#myModal">
+
+        </div>
+
+        `;
+  }).join("")
+
+}
+
+
+// event listeners for all cards
+
+document.addEventListener('click', async (e) => {
+  const moviecard = e.target.closest('.movie-card');
+  const recommendedcard = e.target.closest('.recommended-card');
+  const searchItem = e.target.closest('.search-item');
+
+  let movie = null;
+  let showRecommend = false;
+
+  if (moviecard) {
+    movie = JSON.parse(decodeURIComponent(moviecard.dataset.movie));
+    showRecommend = false; 
+  } else if (recommendedcard) {
+    movie = JSON.parse(decodeURIComponent(recommendedcard.dataset.movie));
+    showRecommend = true; 
+  } else if (searchItem) {
+    movie = JSON.parse(decodeURIComponent(searchItem.dataset.movie));
+    showRecommend = true; 
+  }
+
+  if (!movie) return;
+
+  
+
+  await modalFunc(movie, showRecommend);
+
+  bootstrap.Modal.getOrCreateInstance(document.getElementById('myModal')).show();
+});
+
+document.getElementById('myModal').addEventListener('hidden.bs.modal', () => {
+  document.body.classList.remove('modal-open');
+  document.body.style.overflow = 'auto';
+  document.body.style.paddingRight = '';
+});
+
 // MODAL FUNC
 
-function modalFunc(movie) {
+async function modalFunc(movie, showRecommend=false) {
 
   console.log(movie);
 
@@ -49,109 +251,81 @@ document.querySelector('.movieOverview').textContent = overview;
 
   document.querySelector('.voteCount').textContent =
     `Vote : ${movie.vote_count ?? 0}`;
+
+  // recomended movie section
+    const recommendedContainer = document.querySelector('.recommendedMovies')
+    const recommendedContainerTitle = document.querySelector('.recommendedMoviesTiltle')
+    debugger;
+
+    if(showRecommend){
+
+       const recommendedMovies = await fetchRecommendedMovies(movie.id);
+      recommendedContainer.innerHTML =  getRecommendedMoviesHTML(recommendedMovies)
+      
+      recommendedContainer.style.display="flex"
+      recommendedContainerTitle.style.display="block"
+
+    }else{
+       recommendedContainer.innerHTML =""
+      recommendedContainer.style.display="none"
+      recommendedContainerTitle.style.display="none"
+    }
+
+    if(showRecommend){
+      document.querySelectorAll('.recommended-card').forEach( card =>{
+
+        card.addEventListener('click' , ()=> {
+          const recMovie = JSON.parse(decodeURIComponent(card.dataset.movie))
+          modalFunc(recMovie,true)
+
+        })
+
+
+      }) 
+    }
 }
 
 
-//Banner Movie
 
-function BannerMovie(movie){
-  const bannerURL = `${CONFIG.BACKDROP_URL}${movie.backdrop_path}`
-
-    const img = new Image();
-
-  img.onload = () => {
-
-    document.querySelector(".banner-container").style.backgroundImage =
-      `url(${bannerURL})`;
-
-    document.querySelector(".banner-movie-title").textContent =
-      movie.original_title;
-  };
-
-  img.src = bannerURL;
+async function fetchRecommendedMovies(movieId) {
+  try {
+    const res = await fetch(`${CONFIG.BASE_URL}/movie/${movieId}/recommendations?api_key=${CONFIG.API_KEY}`, fetchOptions);
+    const data = await res.json();
+    return data.results || [];
+  } catch (err) {
+    console.error("Error fetching recommended movies:", err);
+    return [];
+  }
 }
 
-// movie renders
+function getRecommendedMoviesHTML(recommendedMovies) {
 
-function renderMovies (container, movies){
-  const containerAll = document.querySelector(`${container}`);
-  if(!containerAll) return;
+  return recommendedMovies.slice(0,10).map(movie => `
+    <div
+      class="recommended-card"
+      data-movie="${encodeURIComponent(JSON.stringify(movie))}"
+    >
+      <img
+        src="${CONFIG.IMAGE_URL}${movie.poster_path}"
+        alt="${movie.original_title}"
+      >
 
-  containerAll.innerHTML = movies.map((movie) => {
-
-   return `
-
-        <div class="col-4 col-sm-3 col-lg-2">
-
-          <img
-              src="${CONFIG.IMAGE_URL}${movie.poster_path}"
-              class="movie-card "
-              alt="${movie.original_title}"
-              loading="lazy"
-              data-movie="${encodeURIComponent(JSON.stringify( movie))}"
-              data-bs-toggle="modal"
-              data-bs-target="#myModal">
-
-        </div>
-
-        `;
-  }).join("")
+      
+    </div>
+  `).join('');
 
 }
 
 
-// event listeners for all cards
+function scrollRow(btn, value) {
+  const wrapper = btn.closest(".movie-wrapper");
+  const row = wrapper.querySelector(".movie-row");
 
-document.addEventListener('click', (e) => {
-
-   const card = e.target.closest('.movie-card');
-
-  if (!card) return;
-
-
-   const movie = JSON.parse(
-    decodeURIComponent(card.dataset.movie)
-  );
-
-  modalFunc(movie);
-
-});
-
-// fetch all response 
-
-Promise.all([
-  fetch(NowPlayingURL,fetchOptions).then( res => res.json()),
-  fetch(PopularURL,fetchOptions).then( res => res.json()),
-  fetch(TopRatedURL,fetchOptions).then( res => res.json()),
-  fetch(UpComingURL,fetchOptions).then( res => res.json()),
-])
-.then(([nowPlaying,popularUrl,topRated,upcoming]) => {
-
-  const nowPlayingMovies = nowPlaying.results;
-  const popularMovies = popularUrl.results;
-  const topRatedMovies = topRated.results;
-  const upComingMovies = upcoming.results;
-
-  movies = [...nowPlayingMovies, ...popularMovies, ...topRatedMovies, ...upComingMovies]
-
-    const randomMovie =
-    nowPlayingMovies[
-      Math.floor(
-        Math.random() * nowPlayingMovies.length
-      )
-    ];
-
-    BannerMovie(randomMovie)
-
-    renderMovies(".nowPlaying",nowPlayingMovies)
-    renderMovies(".Popular", popularMovies)
-    renderMovies(".topRated", topRatedMovies)
-    renderMovies(".upComing", upComingMovies)
-    renderMovies(".AllMovies", movies)
-})
-.catch(error => {
-  console.error(`TMDB ERROR :`, error)
-})
+  row.scrollBy({
+    left: value,
+    behavior: "smooth"
+  });
+}
 
 
 

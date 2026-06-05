@@ -10,6 +10,11 @@
       overflow-x: hidden ;
     }
 
+     .navbar {
+      background-color: rgba(0,0,0,0.76);
+      position: sticky;
+      top:0;
+    }
     .navbar-brand{
         border: 1px solid red;
         padding: 6px 16px !important;
@@ -24,11 +29,10 @@
         color: white !important;
     }
 
-    .navbar {
-      background-color: rgba(0,0,0,0.76);
-      position: sticky;
-    }
-
+   
+    .navbar-nav {
+  flex-wrap: nowrap;
+}
     .nav-link{
         color: #ffffff;
         margin:5px 8px;
@@ -39,17 +43,13 @@
     }
 
     .nav-link:hover{
-        margin:5px 8px;
-        color: #ffffff;
+       
         background-color: red;
-        border-radius: 12px !important;
-        padding: 6px 16px !important;
+      
         transition: all 0.2s ease-in-out;
     }
 
-    .navbar-nav{
-    flex-wrap:nowrap;
-    }
+   
 
     .active{
          margin:5px 8px;
@@ -62,26 +62,50 @@
       .searchBox{
       max-width:250px;
       width:100%;
+      position: relative;
     }
 
-    @media(max-width:992px){
 
-      .navbar-nav{
-          text-align:center;
-          margin-top:15px;
-          flex-wrap:wrap;
-      }
-
-      .nav-link{
-          margin:8px 0;
-      }
-
-      .searchBox{
-          max-width:100%;
-          margin-top:10px;
-      }
-
+.searchBox .input-group-text {
+  background: white;
+}
+    .searchDropdown {
+       position: absolute;
+       top: 100%;
+      
+       right: 0;
+       width: 100%;
+       background-color: #2222;
+       border-radius: 8px;
+       z-index: 2000;
+       display: none;
+       max-width: 350px;
+       overflow-y: auto;
+       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
     }
+
+    .search-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-item:hover{
+    background: #333;
+}
+
+.search-item img{
+    width: 40px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+
+
+
 
     /* .banner-container{
         
@@ -97,7 +121,7 @@
     position: relative;
     height: 70vh;
     background-size: cover;
-    background-position: center center;
+    background-position: top center;
     background-repeat: no-repeat;
     cursor: pointer;
 }
@@ -120,12 +144,6 @@
         left: 40px;
     }
 
-
-    .banner-content {
-      position: absolute;
-      bottom: 30px;
-      left: 30px;
-    }
 
     .movie-row{
       overflow-x: auto;
@@ -159,6 +177,77 @@
      
     }
 
+    .movie-skeleton {
+  width: 180px;
+  height: 260px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    #2a2a2a 25%,
+    #3a3a3a 37%,
+    #2a2a2a 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+
+.row-wrapper {
+  position: relative;
+}
+
+/* BUTTON STYLE */
+.scroll-btn {
+  position: absolute;
+  
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  font-size: 24px;
+  width: 40px;
+  height: 80px;
+  cursor: pointer;
+  z-index: 10;
+  transition: 0.2s;
+}
+
+.scroll-btn1{
+  top: 117%;
+}
+.scroll-btn2{
+  top: 162%;
+}
+
+.scroll-btn3{
+  top: 220%;
+}
+
+.scroll-btn4{
+  top: 276%;
+}
+
+.scroll-btn:hover {
+  background: rgba(255,0,0,0.7);
+}
+
+/* LEFT */
+.scroll-btn.left {
+  left: 0;
+}
+
+/* RIGHT */
+.scroll-btn.right {
+  right: 0;
+}
+
 
     .row-title {
       margin: 20px 0 10px 10px;
@@ -184,14 +273,28 @@
     max-width: 900px;
 }
 
+body.modal-open {
+  overflow: auto !important;
+}
+
    .modal{
    background-color: rgba(black,black,black,0.25) !important;
     }
-    .modal-content {
-  max-height: 80vh;
-  overflow: hidden; /* prevents ugly internal scroll */
-  border-radius: 16px;
-    background-color: rgba(black,black,black,0.25) !important;
+   .modal-content {
+    max-height: 90vh; 
+    overflow: hidden; 
+    border-radius: 16px;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.modal-body {
+    max-height: calc(90vh - 60px);
+    padding: 20px;
+    scroll-behavior: smooth;
+    border: none;
+    overflow-y:auto !important; 
+     max-height: calc(90vh - 60px);
+
 }
    
 
@@ -199,13 +302,7 @@
       
       border: none;
     }
-    .modal-body{
-      border: none;
-      overflow-y:hidden; 
-  max-height: calc(90vh - 60px);
-      
-      
-    }
+   
     .modal-footer{
       border: none;
     
@@ -244,6 +341,21 @@
       font-size: 20px !important;
     }
 
+    
+ .recommendedMovies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: none;
+  overflow: visible;
+}
+
+.recommended-card img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+}
 /* now playing page */
 /* 
 div.pageimg img {
@@ -262,61 +374,63 @@ div.pageimg img {
 
 } */
 
-@media (max-width: 576px) {
-  .modal-content {
-    max-height: 100vh;
-    border-radius: 0;
+@media (max-width: 992px) {
+  .navbar-nav {
+    text-align: center;
+    width: 100%;
   }
 
-  .img-container img {
-    max-height: 40vh;
+  .nav-link {
+    display: block;
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  .searchBox {
+    max-width: 300px;
+    width: 100%;
   }
 }
 
-@media(max-width:768px){
+/* MOBILE */
+@media (max-width: 768px) {
+  .movie-card {
+    width: 140px;
+    height: 210px;
+  }
 
-   .movieTitle{
-      font-size:1.5rem;
-      margin-top:15px;
-   }
+  .banner-content {
+    left: 15px;
+    bottom: 15px;
+  }
 
-   .movieOverview{
-      font-size:14px;
-   }
-
-   .modal-body{
-      padding:15px;
-   }
-
+  .scroll-btn{
+    display: none;
+  }
 }
 
-
-
-
-@media(max-width:768px){
-
-   .movie-card{
-
-      width:140px;
-      height:210px;
-      margin-right:10px;
-
-   }
-   .movie-card:hover{
-      transform:scale(1.08) !important;
-   }
-
-}
-@media(max-width:480px){
-
-   .movie-card{
-
-      width:110px;
-      height:160px;
-
-   }
-
-
+@media (max-width: 480px) {
+  .movie-card {
+    width: 110px;
+    height: 160px;
+  }
 }
 
-    
+@media (max-width: 992px) {
+
+  .navbar-collapse .searchBox {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .navbar-collapse .input-group {
+    width: 100%;
+  }
+
+  .searchDropdown {
+    width: 100%;
+    max-width: 100%;
+    left:0
+  }
+
+}
