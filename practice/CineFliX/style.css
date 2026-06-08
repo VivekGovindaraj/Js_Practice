@@ -59,27 +59,55 @@
         padding: 6px 16px !important;
     }
 
-      .searchBox{
-      max-width:250px;
-      width:100%;
-      position: relative;
-    }
+    .btn-close{
+      z-index:2000 !important;
+     }
 
+    .searchBoxBtn {
+  width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 12px;
+
+  color: #888;
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.searchBoxBtn:hover {
+  background: #f5f5f5;
+}
+
+.searchBoxBtn.active {
+  background: #f5f5f5;
+}
+
+.searchBoxBtn i {
+  color: #555;
+}
+
+ .searchBox{
+    width:100%;
+    position: sticky;
+  }
 .searchBox .input-group-text {
   background: white;
 }
     .searchDropdown {
-       position: absolute;
-       top: 100%;
-      
-       right: 0;
+       
        width: 100%;
-       background-color: #2222;
+       background-color: #161616;
+       padding:10px 10px;
        border-radius: 8px;
        z-index: 20000;
        display: none;
-       max-width: 350px;
+       
        overflow-y: auto;
        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
     }
@@ -372,8 +400,8 @@ body.modal-open {
 }
 
 .recommended-card img {
-  width: 100px;
-  height: 150px;
+  width: 114px;
+  height: 170px;
   object-fit: cover;
   border-radius: 6px;
 }
@@ -407,10 +435,7 @@ div.pageimg img {
     margin: 6px 0;
   }
 
-  .searchBox {
-    max-width: 300px;
-    width: 100%;
-  }
+  
 }
 
 /* MOBILE */

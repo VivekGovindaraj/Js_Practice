@@ -92,10 +92,10 @@ searchInput.forEach((input) => {
         const clearBtn = wrapper.querySelector('.clear-btn');
 
 
-       const dropdown = 
-        input.closest('.offcanvas') 
-        ? document.querySelector('#mobileMenu .searchDropdown')
-        : document.querySelector('.navbar .searchDropdown');
+       const dropdown = document.querySelector('.searchDropdown')
+        // input.closest('.offcanvas') 
+        // ? document.querySelector('#mobileMenu .searchDropdown')
+        // : document.querySelector('.navbar .searchDropdown');
 
       let searchedTxt = input.value.toLowerCase().trim()
 
@@ -359,6 +359,12 @@ searchInput.forEach((input) => {
     }
 
 
+    document.querySelectorAll('.searchBoxBtn').forEach(btn => 
+       btn.addEventListener('click', function(){
+      window.location.href="search.html"
+    })
+    )
+   
 
 
     // // Now playing
