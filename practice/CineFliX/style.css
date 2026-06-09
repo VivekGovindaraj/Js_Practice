@@ -11,7 +11,7 @@
     }
 
      .navbar {
-      background-color: rgba(0,0,0,0.76);
+      background-color: rgba(0,0,0,1);
       position: sticky;
       top:0;
     }
@@ -63,6 +63,7 @@
       z-index:2000 !important;
      }
 
+
     .searchBoxBtn {
   width: 180px;
   display: flex;
@@ -92,9 +93,14 @@
   color: #555;
 }
 
+.searchBoxContainer{
+  position: fixed;
+  z-index: 1000;
+  background-color: black;
+}
  .searchBox{
     width:100%;
-    position: sticky;
+ 
   }
 .searchBox .input-group-text {
   background: white;
@@ -130,8 +136,49 @@
     object-fit: cover;
     border-radius: 4px;
 }
+.chip {
+
+  border: 1px solid #333;
+ 
+  transition: all 0.2s ease;
+  cursor: pointer;
+  
+}
+
+.chip:hover {
+  background: #ea0d0d;
+  transform: translateY(2px);
+  border-color: #ff0000 !important;
+}
 
 
+.chip.active {
+  background: #ff2828;
+  border-color: #ff3d3d;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 61, 61, 0.3);
+  
+}
+
+/* Focus fix */
+.chip:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.navbar.fixed-bottom a {
+  opacity: 0.7;
+  transition: 0.2s ease;
+}
+
+.navbar.fixed-bottom a:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.navbar.fixed-bottom i {
+  font-size: 22px;
+}
 
 .offcanvas {
   width: 280px;
@@ -148,6 +195,15 @@
 
 .offcanvas .nav-link:hover {
   background: red;
+}
+
+
+
+
+.nav-item-custom:active,
+.nav-item-custom:hover {
+  opacity: 1;
+  color: #ff3d3d !important;
 }
 
 @media (max-width: 991px) {

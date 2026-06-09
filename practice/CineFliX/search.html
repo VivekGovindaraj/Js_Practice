@@ -21,7 +21,7 @@
    <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container-fluid">
       <!-- Logo -->
-      <a href="#" class="navbar-brand text-white">
+      <a href="index.html" class="navbar-brand text-white">
         Cine Prime
       </a>
       <!-- Mobile Toggle Button -->
@@ -139,31 +139,46 @@
   </div>
 
 </div>
+ 
+ <div class="pt-1 px-3 pb-3  container-fluid searchBoxContainer">  
+    <div class="input-group searchBox ">
 
+      <span class="input-group-text bg-white border-end-0">
+        <i class="bi bi-search"></i>
+      </span>
 
-
-   <div class="movieContainer container-fluid mt-3">
-
-    <div class="mt-3 mx-3 mb-3">  
-        <div class="input-group searchBox ">
-
-          <span class="input-group-text bg-white border-end-0">
-            <i class="bi bi-search"></i>
-          </span>
-
-          <input type="text" id="searchInputDesktop" class="form-control border-start-0"  placeholder="Search your movie....">
-          <span class="input-group-text clear-btn d-none cusor-pointer bg-white">
-          <i class="bi bi-x-lg fs-5 "></i>
-        </span>
-        </div>
-
-        <div class="searchDropdown"></div>
-
+      <input type="text" id="searchInputDesktop" class="form-control border-start-0"  placeholder="Search your movie....">
+      <span class="input-group-text clear-btn d-none cusor-pointer bg-white">
+      <i class="bi bi-x-lg fs-5 "></i>
+    </span>
     </div>
+
+    <div class="searchDropdown"></div>
+
+    <div class="chipBtnContainer mt-3 d-flex flex-wrap gap-2">
+      <button class="chip btn btn-small text-white border-1 border-white actionMovieBtn" data-genere="28">Action</button>
+      <button class="chip btn btn-small text-white border-1 border-white comedyMovieBtn" data-genere="25">Comedy</button>
+      <button class="chip btn btn-small text-white border-1 border-white dramaMovieBtn" data-genere="18">Drama</button>
+      <button class="chip btn btn-small text-white border-1 border-white horrorMovieBtn" data-genere="27">Horror</button>
+      <button class="chip btn btn-small text-white border-1 border-white romancMovieBtn" data-genere="25" >Romance</button>
+      <button class="chip btn btn-small text-white border-1 border-white movie2026" data-year="2026">2026</button>
+      <button class="chip btn btn-small text-white border-1 border-white movie2025" data-year="2025">2025</button>
+      <button class="chip btn btn-small text-white border-1 border-white movie2024" data-year="2024">2024</button>
+      <button class="chip btn btn-small text-white border-1  border-white filterResetBtn ">Reset</button>
+    </div>
+
+
+
+  </div>
+
+  <div class="clearfix"></div>
+   <div class="movieContainer container-fluid pt-5 mt-lg-4 mt-5">
+
+   
     
    
 
-    <div class="px-3 mt-2 row row-gap-4 AllMovies pageimg" >
+    <div class="px-3 pt-5 row row-gap-4 AllMovies pageimg" >
            
 
            
@@ -175,6 +190,22 @@
 
     
 
+    <!-- mobile navbar -->
+<nav class="navbar navbar-dark fixed-bottom bottom-0 d-lg-none   border-top-red" style="background-color: black;">
+
+    <div class="container-fluid d-flex justify-content-around align-items-center  py-2">
+      <a href="search.html" class="text-white text-decoration-none nav-item-custom">
+        <i class="bi bi-search fs-4"></i>
+      </a>
+      <a href="index.html" class="text-white text-decoration-none nav-item-custom">
+        <i class="bi bi-house fs-4"></i>
+      </a>
+      <a href="#" class="text-white text-decoration-none nav-item-custom">
+        <i class="bi bi-person-circle fs-4"></i>
+      </a>
+    </div>
+
+   </nav>
 
     
   
