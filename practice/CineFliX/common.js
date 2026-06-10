@@ -323,6 +323,7 @@ searchInput.forEach((input) => {
 
 
           }) 
+          document.querySelector('.modal-body').scrollTop = 0;
         }
     }
 
