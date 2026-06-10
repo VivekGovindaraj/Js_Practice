@@ -192,6 +192,14 @@ searchInput.forEach((input) => {
     function renderMovies (container, movies){
       const containerAll = document.querySelector(`${container}`);
       if(!containerAll) return;
+      if(movies.length == 0) {
+        containerAll.innerHTML = `
+        <div class="mt-5 text-center"><h4 >No Movies found </h4></div>
+        
+        `
+      }else{
+
+      
     
       containerAll.innerHTML = movies.map((movie) => {
 
@@ -212,6 +220,8 @@ searchInput.forEach((input) => {
 
             `;
       }).join("")
+
+      }
 
     }
 
@@ -365,7 +375,67 @@ searchInput.forEach((input) => {
     })
     )
    
+    //search filter and geneer render 
 
+   async function  generReneder(){
+
+    const response = await fetch(
+      `${CONFIG.BASE_URL}/genre/movie/list?api_key=${CONFIG.API_KEY}}`,
+      fetchOptions
+    )
+
+    const data= await response.json();
+
+    const genereDropdown = document.querySelector('#genreFilter')
+
+    data.genres.forEach( genre => {
+
+      genereDropdown.innerHTML += `
+      <option value=${genre.id}>${genre.name}</option>
+      `
+    }) 
+
+   }
+
+
+    generReneder().then(() => {
+  genreFilter.addEventListener('change', filterMovie);
+  yearFilter.addEventListener('change', filterMovie);
+});
+
+    let  genreFilter = document.querySelector('#genreFilter');
+    let  yearFilter = document.querySelector('#yearFilter');
+
+    function filterMovie(){
+      debugger;
+      let filteredMovie = [...movies]
+
+      let genreValue = genreFilter.value;
+      let selectedYear = yearFilter.value;
+
+      if(genreValue){
+
+       filteredMovie = filteredMovie.filter(movie => movie.genre_ids?.includes(Number(genreValue)))
+      }
+       if(selectedYear){
+
+       filteredMovie = filteredMovie.filter(movie => movie.release_date?.includes(selectedYear))
+      }
+
+      renderMovies('.AllMovies', filteredMovie)
+    }
+   
+    
+  
+
+  
+  
+      document.querySelector('.filterResetBtn ').addEventListener('click',  function(){
+        genreFilter.value = ""
+        yearFilter.value = ""
+          renderMovies('.AllMovies', movies)
+      }
+    )
 
     // // Now playing
 

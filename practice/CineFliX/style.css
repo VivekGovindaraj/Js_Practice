@@ -8,12 +8,18 @@
       background-color: #141414;
       color: white;
       overflow-x: hidden ;
+      width: 100%;
     }
 
+    .topNavBar{
+      top:0
+    }
+
+    
      .navbar {
       background-color: rgba(0,0,0,1);
-      position: sticky;
-      top:0;
+    
+      
     }
     .navbar-brand{
         border: 1px solid red;
@@ -25,7 +31,7 @@
         border: 1px solid red;
         padding: 6px 16px !important;
         border-radius: 5px;
-        background: linear-gradient(to right, black, black ,rgba(255,0,0, 0.8),) !important;
+        background: linear-gradient(to right, black, black ,rgba(255,0,0, 0.8)) !important;
         color: white !important;
     }
 
@@ -181,7 +187,7 @@
 }
 
 .offcanvas {
-  width: 280px;
+   width:min(280px,85vw);
   background: black !important;
 }
 
@@ -198,7 +204,15 @@
 }
 
 
-
+.mobileNavBar{
+  position: fixed !important;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1055;
+  margin: 0;
+}
 
 .nav-item-custom:active,
 .nav-item-custom:hover {
@@ -256,7 +270,7 @@
       margin-top: 20px !important;
       padding-bottom: 20px;
        scroll-behavior:smooth;
-       /* overflow-x: hidden; */
+       overflow-y: hidden; 
       
     }
     .movie-row::-webkit-scrollbar{
@@ -398,7 +412,7 @@ body.modal-open {
     scroll-behavior: smooth;
     border: none;
     overflow-y:auto !important; 
-     max-height: calc(90vh - 60px);
+    
 
 }
    
@@ -461,6 +475,10 @@ body.modal-open {
   object-fit: cover;
   border-radius: 6px;
 }
+
+.container-fluid{
+  overflow-x:hidden;
+}
 /* now playing page */
 /* 
 div.pageimg img {
@@ -480,6 +498,10 @@ div.pageimg img {
 } */
 
 @media (max-width: 992px) {
+   body{
+    padding-bottom:80px;
+  }
+
   .navbar-nav {
     text-align: center;
     width: 100%;

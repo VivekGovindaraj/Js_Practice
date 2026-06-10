@@ -18,7 +18,7 @@
   <!-- Navbar -->
 
 
-   <nav class="navbar navbar-expand-lg sticky-top">
+   <nav class="navbar navbar-expand-lg sticky-top topNavBar">
     <div class="container-fluid">
       <!-- Logo -->
       <a href="index.html" class="navbar-brand text-white">
@@ -154,18 +154,43 @@
     </div>
 
     <div class="searchDropdown"></div>
+    
+    <div class="row g-2 my-3 ">
 
-    <div class="chipBtnContainer mt-3 d-flex flex-wrap gap-2">
+      <div class="col-auto">
+        <select id="genreFilter" class="form-select bg-dark text-white" >
+          <option value="">All Genres</option>
+        </select>
+      </div>
+
+      <div class="col-auto">
+        <select id="yearFilter" class="form-select bg-dark text-white" size="">
+          <option value="">All Years</option>
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <button class="chip btn btn-small text-white border-1  border-white filterResetBtn ">Reset</button>
+      </div>
+    </div>
+      <!-- <div class="chipBtnContainer mt-3 d-flex flex-wrap gap-2">
       <button class="chip btn btn-small text-white border-1 border-white actionMovieBtn" data-genere="28">Action</button>
       <button class="chip btn btn-small text-white border-1 border-white comedyMovieBtn" data-genere="25">Comedy</button>
       <button class="chip btn btn-small text-white border-1 border-white dramaMovieBtn" data-genere="18">Drama</button>
       <button class="chip btn btn-small text-white border-1 border-white horrorMovieBtn" data-genere="27">Horror</button>
-      <button class="chip btn btn-small text-white border-1 border-white romancMovieBtn" data-genere="25" >Romance</button>
+      <button class="chip btn btn-small text-white border-1 border-white romancMovieBtn" data-genere="10749" >Romance</button>
+      <button class="chip btn btn-small text-white border-1 border-white romancMovieBtn"  data-genre="53" >Thriller</button>
+      
       <button class="chip btn btn-small text-white border-1 border-white movie2026" data-year="2026">2026</button>
       <button class="chip btn btn-small text-white border-1 border-white movie2025" data-year="2025">2025</button>
       <button class="chip btn btn-small text-white border-1 border-white movie2024" data-year="2024">2024</button>
       <button class="chip btn btn-small text-white border-1  border-white filterResetBtn ">Reset</button>
-    </div>
+    </div> -->
 
 
 
@@ -192,7 +217,7 @@
 
     <!-- mobile navbar -->
    <!-- mobile navbar -->
-<nav class="navbar navbar-dark fixed-bottom bottom-0 d-lg-none  border-top-red" >
+<nav class="navbar navbar-dark fixed-bottom bottom-0 d-lg-none  border-top-red mobileNavBar" >
 
     <div class="container-fluid d-flex justify-content-around align-items-center  py-3">
       <a href="search.html" class="text-white text-decoration-none nav-item-custom">
@@ -212,7 +237,7 @@
   
    <!-- modal movie -->
 
-   <div class="modal fade rounded-5 rounded-sm-2" id="myModal">
+   <div class="modal fade rounded-lg-5 rounded-0" id="myModal">
     <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-custom ">
       <div class="modal-content bg-dark text-white">
 
