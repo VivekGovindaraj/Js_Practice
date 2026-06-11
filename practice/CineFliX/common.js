@@ -230,31 +230,30 @@ searchInput.forEach((input) => {
 
     document.addEventListener('click', async (e) => {
       const moviecard = e.target.closest('.movie-card');
-      const recommendedcard = e.target.closest('.recommended-card');
+      // const recommendedcard = e.target.closest('.recommended-card');
       const searchItem = e.target.closest('.search-item');
 
       let movie = null;
-      let showRecommend = false;
+    
 
       if (moviecard) {
         movie = JSON.parse(decodeURIComponent(moviecard.dataset.movie));
-        showRecommend = false; 
-      } else if (recommendedcard) {
-        movie = JSON.parse(decodeURIComponent(recommendedcard.dataset.movie));
-        showRecommend = true; 
-      } else if (searchItem) {
+      
+      }else if (searchItem) {
         movie = JSON.parse(decodeURIComponent(searchItem.dataset.movie));
-        showRecommend = true; 
+       
       }
 
       if (!movie) return;
 
       
 
-      await modalFunc(movie, showRecommend);
+      await modalFunc(movie);
 
       bootstrap.Modal.getOrCreateInstance(document.getElementById('myModal')).show();
     });
+
+
 
     document.getElementById('myModal').addEventListener('hidden.bs.modal', () => {
       document.body.classList.remove('modal-open');
@@ -264,7 +263,7 @@ searchInput.forEach((input) => {
 
     // MODAL FUNC
 
-    async function modalFunc(movie, showRecommend=false) {
+    async function modalFunc(movie) {
 
       console.log(movie);
 
@@ -293,70 +292,19 @@ searchInput.forEach((input) => {
       document.querySelector('.voteCount').textContent =
         `Vote : ${movie.vote_count ?? 0}`;
 
-      // recomended movie section
-        const recommendedContainer = document.querySelector('.recommendedMovies')
-        const recommendedContainerTitle = document.querySelector('.recommendedMoviesTiltle')
-        debugger;
+     
+      const playBtn = document.querySelector('.playBtn') 
 
-        if(showRecommend){
-
-          const recommendedMovies = await fetchRecommendedMovies(movie.id);
-          recommendedContainer.innerHTML =  getRecommendedMoviesHTML(recommendedMovies)
-          
-          recommendedContainer.style.display="flex"
-          recommendedContainerTitle.style.display="block"
-
-        }else{
-          recommendedContainer.innerHTML =""
-          recommendedContainer.style.display="none"
-          recommendedContainerTitle.style.display="none"
-        }
-
-        if(showRecommend){
-          document.querySelectorAll('.recommended-card').forEach( card =>{
-
-            card.addEventListener('click' , ()=> {
-              const recMovie = JSON.parse(decodeURIComponent(card.dataset.movie))
-              modalFunc(recMovie,true)
-
-            })
-
-
-          }) 
-          document.querySelector('.modal-body').scrollTop = 0;
-        }
-    }
-
-
-
-    async function fetchRecommendedMovies(movieId) {
-      try {
-        const res = await fetch(`${CONFIG.BASE_URL}/movie/${movieId}/recommendations?api_key=${CONFIG.API_KEY}`, fetchOptions);
-        const data = await res.json();
-        return data.results || [];
-      } catch (err) {
-        console.error("Error fetching recommended movies:", err);
-        return [];
+      if(playBtn){
+        playBtn.dataset.movieid = movie.id
       }
+      
+   
     }
 
-    function getRecommendedMoviesHTML(recommendedMovies) {
 
-      return recommendedMovies.slice(0,10).map(movie => `
-        <div
-          class="recommended-card"
-          data-movie="${encodeURIComponent(JSON.stringify(movie))}"
-        >
-          <img
-            src="${CONFIG.IMAGE_URL}${movie.poster_path}"
-            alt="${movie.original_title}"
-          >
 
-          
-        </div>
-      `).join('');
 
-    }
 
 
     function scrollRow(btn, value) {
@@ -377,7 +325,8 @@ searchInput.forEach((input) => {
     )
    
     //search filter and geneer render 
-
+ let  genreFilter = document.querySelector('#genreFilter');
+    let  yearFilter = document.querySelector('#yearFilter');
    async function  generReneder(){
 
     const response = await fetch(
@@ -398,45 +347,182 @@ searchInput.forEach((input) => {
 
    }
 
+   if(yearFilter && genreFilter){
 
+   
     generReneder().then(() => {
-  genreFilter.addEventListener('change', filterMovie);
-  yearFilter.addEventListener('change', filterMovie);
-});
+    genreFilter.addEventListener('change', filterMovie);
+      yearFilter.addEventListener('change', filterMovie);
+    });
 
-    let  genreFilter = document.querySelector('#genreFilter');
-    let  yearFilter = document.querySelector('#yearFilter');
+    }
+
+   
 
     function filterMovie(){
       debugger;
-      let filteredMovie = [...movies]
+    
+
+       let uniqueMovies = [...new Map((
+        movies.map(movie => [movie.id, movie])
+      )).values()]
 
       let genreValue = genreFilter.value;
       let selectedYear = yearFilter.value;
 
       if(genreValue){
 
-       filteredMovie = filteredMovie.filter(movie => movie.genre_ids?.includes(Number(genreValue)))
+       uniqueMovies = uniqueMovies.filter(movie => movie.genre_ids?.includes(Number(genreValue)))
       }
        if(selectedYear){
 
-       filteredMovie = filteredMovie.filter(movie => movie.release_date?.includes(selectedYear))
+       uniqueMovies = uniqueMovies.filter(movie => movie.release_date?.includes(selectedYear))
       }
 
-      renderMovies('.AllMovies', filteredMovie)
+      renderMovies('.AllMovies', uniqueMovies)
     }
    
-    
-  
+  let filterResetBtn = document.querySelector('.filterResetBtn ')
+if(filterResetBtn){
 
-  
-  
-      document.querySelector('.filterResetBtn ').addEventListener('click',  function(){
+    filterResetBtn.addEventListener('click',  function(){
+          let uniqueMovies = [...new Map((
+        movies.map(movie => [movie.id, movie])
+      )).values()]
+
         genreFilter.value = ""
         yearFilter.value = ""
-          renderMovies('.AllMovies', movies)
+          renderMovies('.AllMovies',uniqueMovies)
       }
     )
+    }
+
+
+    // play btn function and play move page functions
+
+document.addEventListener('click', (e) => {
+
+  const playBtn = e.target.closest('.playBtn');
+
+  if (!playBtn) return;
+
+  const movieId = playBtn.dataset.movieid;
+
+  window.location.href = `playmovie.html?id=${movieId}`;
+
+});
+
+const params = new URLSearchParams(window.location.search);
+
+const movieId = params.get("id");
+async function getMovieDetails(movieId) {
+
+  const res = await fetch(
+    `${CONFIG.BASE_URL}/movie/${movieId}?api_key=${CONFIG.API_KEY}`,
+    fetchOptions
+  );
+
+  const movie = await res.json();
+
+  
+  renderMovie(movie);
+}
+
+function renderMovie(movie){
+
+  document.querySelector('#movieTitle').textContent =
+    movie.original_title;
+
+  document.querySelector('#movieOverview').textContent =
+    movie.overview;
+
+  document.querySelector('#movieRating').textContent =
+    movie.vote_average;
+
+  document.querySelector('#movieYear').textContent =
+    movie.release_date?.slice(0,4);
+
+    
+}
+
+if(movieId !==null){
+getMovieDetails(movieId);
+getTrailer(movieId);
+fetchRecommendedMovies(movieId)
+
+}
+
+// trailer function
+
+async function getTrailer(movieId){
+
+  const res = await fetch(
+  `${CONFIG.BASE_URL}/movie/${movieId}/videos?api_key=${CONFIG.API_KEY}`,
+  fetchOptions
+);
+
+  const data= await  res.json()
+
+ const trailer =
+  data.results.find(v => v.type === "Trailer") ||
+  data.results.find(v => v.type === "Teaser") ||
+  data.results[0];
+debugger;
+  if(trailer){
+    if (trailer) {
+  document.querySelector("#movieTrailer").src =
+    `https://www.youtube.com/embed/${trailer.key}?autoplay=1`;
+}
+  }
+  }
+
+
+
+
+
+    // recommended movie
+
+  async function fetchRecommendedMovies(movieId) {
+    try {
+      const res = await fetch(
+        `${CONFIG.BASE_URL}/movie/${movieId}/recommendations?api_key=${CONFIG.API_KEY}`,
+        fetchOptions
+      );
+
+      const data = await res.json();
+
+      const recommendedMovies = data.results || [];
+
+      const uniqueMovies = [
+        ...new Map(
+          recommendedMovies.map(movie => [movie.id, movie])
+        ).values()
+      ];
+
+      renderMovies('.AllMovies', uniqueMovies);
+
+    } catch (err) {
+      console.error("Error fetching recommended movies:", err);
+    }
+}
+
+    // function getRecommendedMoviesHTML(recommendedMovies) {
+
+    //   return recommendedMovies.slice(0,10).map(movie => `
+    //     <div
+    //       class="recommended-card"
+    //       data-movie="${encodeURIComponent(JSON.stringify(movie))}"
+    //     >
+    //       <img
+    //         src="${CONFIG.IMAGE_URL}${movie.poster_path}"
+    //         alt="${movie.original_title}"
+    //       >
+
+          
+    //     </div>
+    //   `).join('');
+
+    // }
 
     // // Now playing
 
