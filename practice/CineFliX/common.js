@@ -92,7 +92,7 @@ searchInput.forEach((input) => {
         const clearBtn = wrapper.querySelector('.clear-btn');
 
 
-       const dropdown = document.querySelector('.searchDropdown')
+       const serachedMovieContainer = document.querySelector('.serachedMovieContainer')
         // input.closest('.offcanvas') 
         // ? document.querySelector('#mobileMenu .searchDropdown')
         // : document.querySelector('.navbar .searchDropdown');
@@ -103,21 +103,17 @@ searchInput.forEach((input) => {
       clearBtn.classList.remove('d-none');
     } else {
       clearBtn.classList.add('d-none');
-      dropdown.style.display = "none";
-      dropdown.innerHTML = "";
-      return;
+      serachedMovieContainer.style.display = "none";
+      document.querySelector('.serachedMovies').innerHTML = "";
+      
     }
 
-    if (searchedTxt.length < 2) {
-      dropdown.style.display = "none";
+    
+ if (searchedTxt.length < 2) {
+     serachedMovieContainer.style.display = "none";
       return;
     }
-
-      if(searchedTxt.length < 2){
-      dropdown.style.display="none"
-      return
-      }
-
+    
       let uniqueMovies = [...new Map((
         movies.map(movie => [movie.id, movie])
       )).values()]
@@ -127,24 +123,15 @@ searchInput.forEach((input) => {
       return  movie.title?.toLowerCase().includes(searchedTxt) || movie.original_title?.toLowerCase().includes(searchedTxt)
       })
 
-      dropdown.innerHTML = filteredMovie.map((movie) => {
-
-    return `
-      <div class="search-item" data-movie="${encodeURIComponent(JSON.stringify(movie))}"> 
-
-        <img src="${CONFIG.IMAGE_URL}${movie.poster_path}" alt="movie">
-        <span>${movie.original_title}</span>
-      </div>
       
-      `
-      }).join("")
+      renderMovies('.serachedMovies', filteredMovie)
+     serachedMovieContainer.style.display = "block";
 
-      dropdown.style.display="block";
       clearBtn.addEventListener('click', () => {
     input.value = "";
     clearBtn.classList.add("d-none");
-    dropdown.style.display = "none";
-    dropdown.innerHTML = "";
+    serachedMovieContainer.style.display = "none";
+    document.querySelector('.serachedMovies').innerHTML = "";
     input.focus();
   });
 
@@ -170,6 +157,11 @@ searchInput.forEach((input) => {
       };
 
       img.src = bannerURL;
+
+      const playBtn = document.querySelector('.playBtn')
+      if(playBtn){
+        playBtn.dataset.movieid= movie.id
+      }
     }
 
     // movie renders
@@ -407,6 +399,9 @@ document.addEventListener('click', (e) => {
   if (!playBtn) return;
 
   const movieId = playBtn.dataset.movieid;
+
+  document.querySelector('.modal').style.display = "none"
+  document.querySelector('.modal-backdrop').style.display = "none"
 
   window.location.href = `playmovie.html?id=${movieId}`;
 
