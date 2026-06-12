@@ -144,8 +144,8 @@
    <div class="movieContainer container-fluid mt-lg-4 mt-1">
     <div class="text-end d-lg-block d-none">
     <button
-        class="btn btn-outline-light mb-3"
-        onclick="history.back()">
+        class="btn btn-outline-light mb-3 backBtn"
+       >
         <i class="bi bi-arrow-left"></i>
         Back
     </button>
@@ -161,7 +161,7 @@
     
    <div class="movie-details mt-4">
 
-    <h1 id="movieTitle" class="h3 h-md-1"></h1>
+    <h1 id="movieTitle" class="h3 h-md-1 fw-bold"></h1>
 
     <div class="d-flex flex-wrap gap-3 my-3 align-items-center">
 
@@ -177,7 +177,7 @@
 
     </div>
 
-   
+    <h5 class="my-3">Overview:</h5>
     <p id="movieOverview"></p>
        
    </div>
@@ -189,23 +189,21 @@
     
 
     <!-- mobile navbar -->
-   <!-- mobile navbar -->
-<nav class="navbar navbar-dark fixed-bottom bottom-0 d-lg-none  border-top-red mobileNavBar" >
+<nav class="navbar navbar-dark fixed-bottom bottom-0 d-lg-none border-top-red mobileNavBar" >
 
     <div class="container-fluid d-flex justify-content-around align-items-center  py-3">
       <a href="search.html" class="text-white text-decoration-none nav-item-custom">
-        <i class="bi bi-search fs-3"></i>
+        <i class="bi bi-search fs-1"></i>
       </a>
       <a href="index.html" class="text-white text-decoration-none nav-item-custom">
-        <i class="bi bi-house fs-3"></i>
+        <i class="bi bi-house fs-1"></i>
       </a>
       <a href="#" class="text-white text-decoration-none nav-item-custom">
-        <i class="bi bi-person-circle fs-3"></i>
+        <i class="bi bi-person-circle fs-1"></i>
       </a>
     </div>
 
    </nav>
-
     
   
   <!-- modal movie -->

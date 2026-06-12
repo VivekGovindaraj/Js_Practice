@@ -69,6 +69,9 @@
         renderMovies(".upComing", upComingMovies)
         renderMovies(".AllMovies", movies)
         // getRecommendedMoviesHTML('recommendedMovies', recomendedMovies)
+     
+       
+     
     } 
       
     catch (error) {
@@ -285,12 +288,16 @@ searchInput.forEach((input) => {
         `Vote : ${movie.vote_count ?? 0}`;
 
      
-      const playBtn = document.querySelector('.playBtn') 
+     const modalPlayBtn = document.querySelector('#myModal .playBtn');
 
-      if(playBtn){
-        playBtn.dataset.movieid = movie.id
+      if(modalPlayBtn){
+          modalPlayBtn.dataset.movieid = movie.id;
       }
-      
+      const bannerPlayBtn = document.querySelector('.banner-container .playBtn');
+
+      if(bannerPlayBtn){
+          bannerPlayBtn.dataset.movieid = movie.id;
+      }
    
     }
 
@@ -400,8 +407,16 @@ document.addEventListener('click', (e) => {
 
   const movieId = playBtn.dataset.movieid;
 
-  document.querySelector('.modal').style.display = "none"
-  document.querySelector('.modal-backdrop').style.display = "none"
+    const modal = document.querySelector('.modal');
+  const backdrop = document.querySelector('.modal-backdrop');
+
+  if (modal) {
+    modal.style.display = 'none';
+  }
+
+  if (backdrop) {
+    backdrop.style.display = 'none';
+  }
 
   window.location.href = `playmovie.html?id=${movieId}`;
 
@@ -500,6 +515,19 @@ debugger;
       console.error("Error fetching recommended movies:", err);
     }
 }
+
+
+document.querySelector('.backBtn').addEventListener('click', () => {
+
+    const previousPage = sessionStorage.getItem('previousPage');
+
+    if (previousPage) {
+        window.location.href = previousPage;
+    } else {
+        history.back();
+    }
+
+});
 
     // function getRecommendedMoviesHTML(recommendedMovies) {
 
