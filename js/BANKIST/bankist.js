@@ -96,7 +96,7 @@ const displayMovements = function(movements) {
         
         const movementtype = (movement > 0) ? 'deposit' : 'withdrawl';
         const datetoday = new Date();
-          const  datetodays= `${datetoday.getDate()}/${datetoday.getMonth()}/${datetoday.getFullYear()} - ${datetoday.getHours() }:${datetoday.getMinutes()}`
+          const  datetodays= `${datetoday.getDate()}/${datetoday.getMonth() + 1}/${datetoday.getFullYear()} - ${datetoday.getHours() }:${datetoday.getMinutes()}`
 
         const html = `<div class="movementsrow">
                         <div class="movementtype movementtype${movementtype}">${i+1} ${movementtype}</div>
@@ -169,7 +169,7 @@ const currentBalance = function(movements){
     })
     // console.log(balance1)
     // return balance1;
-    labelBalance.innerHTML = (` $ ${balance1} `);
+    labelBalance.innerHTML = (` ₹ ${balance1} `);
 }
 // currentBalance(account1.movements);
 
@@ -220,43 +220,16 @@ const  calclationSummary = function(movements){
 // Create login ID and find login ID
 
 let currentAccount;
+let timer;
 
 // Fake login
 
 
 
-let updateUI;
-
-
-
-
-loginBtn.addEventListener('click', function(e){
-    e.preventDefault();
-
-
-
-    currentAccount  = accounts.find(
-        account => account.userName === userlogin.value
-    )
-
-
-    if(currentAccount?.Pin  === Number( loginpin.value)){
-        console.log('login success');
-
-        loginpin.value =''
-        
-
-
-        // Display UI Message
-
-
-        labelWelcome.innerHTML = `Welcome Back...! ${currentAccount.Owner}`
-        dashboard.style.opacity = 1;
-       
-
-      updateUI = function(acc){          /// here we update ui update for tranacti  balance summary updating for each tranaction so i declared variable outside herw i just re assingned.
+let updateUI = function(acc){          /// here we update ui update for tranacti  balance summary updating for each tranaction so i declared variable outside herw i just re assingned.
         // Display Movements
-
+    userlogin.value = '';
+loginpin.value = '';
 
         
         const displayMovements = function(movements, sorted) {
@@ -280,7 +253,7 @@ loginBtn.addEventListener('click', function(e){
                                
                                 </div>
                                 <div>
-                                 <span class="movementvalue"> $${movement.toFixed(2)}</span>
+                                 <span class="movementvalue"> ₹ ${movement.toFixed(2)}</span>
                                 </div>
                              </div>`
                 console.log(html);
@@ -368,8 +341,41 @@ loginBtn.addEventListener('click', function(e){
         calclationSummary(currentAccount);
     }
 
+
+
+
+loginBtn.addEventListener('click', function(e){
+    e.preventDefault();
+
+
+
+    currentAccount  = accounts.find(
+        account => account.userName === userlogin.value
+    )
+
+
+    if(currentAccount?.Pin  === Number( loginpin.value)){
+        console.log('login success');
+
+        loginpin.value =''
+        
+
+
+        // Display UI Message
+
+
+        labelWelcome.innerHTML = `Welcome Back...! ${currentAccount.Owner}`
+        dashboard.style.opacity = 1;
+       
+
+    
+
     updateUI(currentAccount);  // here i calling the function for updating the ui after all the calculation
     console.log(currentAccount);
+
+     if (timer) clearInterval(timer);
+
+    timer = startLogoutTimer();
 
 
         }
@@ -395,6 +401,7 @@ transferBtn.addEventListener('click', function(e){
     console.log(amount,recvacc);
 
     transferamount.value = '';
+    transferto.value = '';
 
     if(amount >0 && recvacc && currentAccount.balance >= amount && recvacc?.userName !== currentAccount.userName){
         // here we are checking conditiion balance must be greater than 0 annd receiver account is true account or existig account  current account is greater than entered amount and entered user name is not current account account user name.
@@ -424,6 +431,7 @@ loanrequestBtn.addEventListener('click', function(e){
         currentAccount.movements.push(amount);
         updateUI(currentAccount);
     }
+    loanamount.value = '';
 })
 
 
@@ -467,6 +475,7 @@ let sorted ;
 sorted = false;
 
 sortBtn.addEventListener('click', function(e){
+
     
     e.preventDefault();
 
@@ -475,12 +484,38 @@ sortBtn.addEventListener('click', function(e){
     
     sorted = !sorted;
 
+    sortBtn.textContent = sorted ? 'Unsort' : 'Sort';
+
 
 
 });
 
 
+const startLogoutTimer = function () {
+  let time = 300; // 5 minutes
 
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, '0');
+    const sec = String(time % 60).padStart(2, '0');
+
+    labelTimer.textContent = `${min}:${sec}`;
+
+    if (time === 0) {
+      clearInterval(timer);
+
+      labelWelcome.textContent = 'Login to get started';
+      dashboard.style.opacity = 0;
+    }
+
+    time--;
+  };
+
+  tick();
+
+  const timer = setInterval(tick, 1000);
+
+  return timer;
+};
 
 
 

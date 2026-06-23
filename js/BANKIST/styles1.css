@@ -1,0 +1,494 @@
+:root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+
+    --success:#10b981;
+    --danger:#ef4444;
+    --warning:#f59e0b;
+
+    --bg:#f8fafc;
+    --card:#ffffff;
+
+    --text:#0f172a;
+    --muted:#64748b;
+
+    --shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    background:var(--bg);
+    font-family:'Segoe UI',sans-serif;
+    color:var(--text);
+}
+
+.app-container{
+    width:100%;
+}
+
+/* ================= NAVBAR ================= */
+
+nav{
+    width:min(1200px,95%);
+    margin:20px auto;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:white;
+
+    padding:20px 30px;
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+}
+
+.logo{
+    width:60px;
+    height:60px;
+    object-fit:contain;
+}
+
+.welcomemsg{
+    font-size:1.3rem;
+    font-weight:600;
+    color:var(--muted);
+}
+
+nav form{
+    display:flex;
+    gap:10px;
+}
+
+.userinput{
+    width:120px;
+    height:45px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#f1f5f9;
+
+    text-align:center;
+
+    transition:.3s;
+}
+
+.userinput:focus{
+    outline:none;
+    background:white;
+    box-shadow:0 0 0 3px rgba(79,70,229,.15);
+}
+
+.loginbtn{
+    border:none;
+
+    background:var(--primary);
+
+    color:white;
+
+    border-radius:12px;
+
+    padding:0 20px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.loginbtn:hover{
+    background:var(--primary-dark);
+}
+
+/* ================= DASHBOARD ================= */
+
+.dashboard{
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:20px;
+
+    display:grid;
+
+    grid-template-columns:3fr 2fr;
+
+    grid-template-areas:
+    "balance balance"
+    "movements transfer"
+    "movements loan"
+    "movements close"
+    "summary summary";
+
+    gap:20px;
+
+    opacity:0;
+}
+
+/* ================= BALANCE ================= */
+
+.balance{
+    grid-area:balance;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+}
+
+.balancelabel{
+    font-size:1rem;
+    color:var(--muted);
+}
+
+.asof{
+    margin-top:5px;
+    color:#94a3b8;
+}
+
+.totalbalance{
+    font-size:2.5rem;
+    font-weight:700;
+}
+
+/* ================= MOVEMENTS ================= */
+
+.movements{
+    grid-area:movements;
+
+    background:white;
+
+    border-radius:20px;
+
+    overflow-y:auto;
+
+    height:700px;
+
+    box-shadow:var(--shadow);
+}
+
+.movementsrow{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+
+    padding:18px;
+
+    border-bottom:1px solid #eef2f7;
+}
+
+.movementsrow:hover{
+    background:#f8fafc;
+}
+
+.movementtype{
+    min-width:130px;
+
+    text-align:center;
+
+    color:white;
+
+    font-size:.75rem;
+
+    font-weight:700;
+
+    border-radius:30px;
+
+    padding:8px 12px;
+}
+
+.movementtypedeposit{
+    background:var(--success);
+}
+
+.movementtypewithdrawl{
+    background:var(--danger);
+}
+
+.movementdate{
+    color:var(--muted);
+}
+
+.movementvalue{
+    margin-left:auto;
+
+    font-weight:700;
+
+    font-size:1.1rem;
+}
+
+/* ================= SUMMARY ================= */
+
+.summary-block{
+    grid-area:summary;
+}
+
+.summary{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+}
+
+.summarylabel{
+    font-weight:700;
+}
+
+.summaryvalue{
+    font-weight:700;
+}
+
+.summaryvaluein{
+    color:var(--success);
+}
+
+.summaryvalueout{
+    color:var(--danger);
+}
+
+.summaryinterest{
+    color:var(--primary);
+}
+
+.btnsort{
+    margin-left:auto;
+
+    border:none;
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:10px 18px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+}
+
+.logouttime{
+    margin-top:15px;
+
+    text-align:right;
+
+    color:var(--muted);
+
+    font-weight:600;
+}
+
+.timer{
+    color:var(--danger);
+}
+
+/* ================= OPERATIONS ================= */
+
+.operation{
+    padding:25px;
+
+    border-radius:20px;
+
+    color:white;
+
+    box-shadow:var(--shadow);
+}
+
+.operationlabel{
+    font-size:1.1rem;
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+.operationtransfer{
+    grid-area:transfer;
+
+    background:
+    linear-gradient(
+        135deg,
+        #f59e0b,
+        #fbbf24
+    );
+}
+
+.operationloan{
+    grid-area:loan;
+
+    background:
+    linear-gradient(
+        135deg,
+        #10b981,
+        #34d399
+    );
+}
+
+.operationclose{
+    grid-area:close;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ef4444,
+        #f87171
+    );
+}
+
+/* ================= FORMS ================= */
+
+.form{
+    display:grid;
+
+    grid-template-columns:2fr 2fr auto;
+
+    gap:10px;
+}
+
+.formloan{
+    grid-template-columns:2fr auto;
+}
+
+.formclose{
+    grid-template-columns:2fr 2fr auto;
+}
+
+.forminput{
+    border:none;
+
+    border-radius:12px;
+
+    padding:12px;
+
+    width:100%;
+
+    text-align:center;
+
+    background:rgba(255,255,255,.85);
+}
+
+.forminput:focus{
+    outline:none;
+    background:white;
+}
+
+.formlabel{
+    font-size:.85rem;
+    font-weight:600;
+    text-align:center;
+}
+
+.btn{
+    border:none;
+
+    background:#111827;
+
+    color:white;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    padding:12px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+.dashboard{
+    grid-template-columns:1fr;
+
+    grid-template-areas:
+    "balance"
+    "summary"
+    "movements"
+    "transfer"
+    "loan"
+    "close";
+}
+
+.movements{
+    height:400px;
+}
+
+}
+
+@media(max-width:768px){
+
+nav{
+    flex-direction:column;
+    gap:15px;
+}
+
+nav form{
+    width:100%;
+    flex-direction:column;
+}
+
+.userinput,
+.loginbtn{
+    width:100%;
+    padding: 16px;
+}
+
+.balance{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+}
+
+.summary{
+    justify-content:center;
+}
+
+.form,
+.formloan,
+.formclose{
+    display:flex;
+    flex-direction:column;
+}
+
+.btn{
+    width:100%;
+}
+
+.movementsrow{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.movementvalue{
+    margin-left:0;
+}
+
+.totalbalance{
+    font-size:2rem;
+}
+
+}
