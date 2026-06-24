@@ -53,7 +53,9 @@ let allQuotes = [
   {id:50, quote:"Act as if what you do makes a difference. It does.",author:"William James"}
 ];
 
-// localStorage.setItem('allQuotes', JSON.stringify(allQuotes))
+if (!localStorage.getItem('allQuotes')) {
+    localStorage.setItem('allQuotes', JSON.stringify(allQuotes));
+}
 
 
 
@@ -66,6 +68,9 @@ const newQuote1 = document.querySelector('#newQuote');
 const addNewQuote = document.querySelector('#addQuote');
 
 const skipQuote = document.querySelector('#skipBtn')
+  const statsBtn = document.querySelector('#statsBtn');
+  const likeBtn = document.querySelector('#likeBtn');
+
 
 
 // All function loader
@@ -78,28 +83,29 @@ function AllFunctionloader(){
 
     //new quote function call
 
-    newQuote1.addEventListener('click' , randomQuote);
-
-    // add new quote
-
+      newQuote1.addEventListener('click', randomQuote);
     addNewQuote.addEventListener('click', addnewQuote);
+
+    likeBtn.addEventListener('click', likeQuote);
+
+    statsBtn.addEventListener('click', showStats);
+
+    skipQuote.addEventListener('click', skipQuoteFunc);
 
      // library count
    
 
     librarycount();
+     randomQuote();
+     loadLikeCount();
+     loadSkipCount();
 
     document.querySelector('#addYourQuote').value = "" ;
     document.querySelector('#addAuthor').value = "";
 
-    // skip func
-
-    skipQuote.addEventListener('click', randomQuote)
-
+   
 
     
-
-
 
 
 }
@@ -111,7 +117,7 @@ function AllFunctionloader(){
          let getQuotes = localStorage.getItem('allQuotes');
         let objQuotes = JSON.parse(getQuotes);
 
-     let librarylen = objQuotes.length +1;
+     let librarylen = objQuotes.length;
 
      document.querySelector('.quoteCount').innerHTML = librarylen;
     }
@@ -121,13 +127,18 @@ function AllFunctionloader(){
 
 function addnewQuote(){
 
-        let getQuotes = localStorage.getItem('allQuotes');
-        let objQuotes = JSON.parse(getQuotes);
-        console.log(objQuotes);
-     
+    
+         let getquoteinput = document.querySelector('#addYourQuote').value.trim();
+        let getauthorinput = document.querySelector('#addAuthor').value.trim();
 
-         let getquoteinput = document.querySelector('#addYourQuote').value;
-        let getauthorinput = document.querySelector('#addAuthor').value;
+         if (!getquoteinput || !getauthorinput) {
+        alert("Please enter both quote and author");
+        return;
+    }
+
+     let getQuotes = localStorage.getItem('allQuotes');
+        let objQuotes = JSON.parse(getQuotes) || [];
+        console.log(objQuotes);
 
 
         let dummyObj = {
@@ -139,10 +150,11 @@ function addnewQuote(){
         console.log(`new quote : ${dummyObj}  `)
 
         objQuotes.push(dummyObj)
-
+        
         localStorage.setItem('allQuotes', JSON.stringify(objQuotes));
+        console.log('Quote added successfully');
 
-        console.log( localStorage.setItem('allQuotes', JSON.stringify(objQuotes)));
+       
         
 
         // library count
@@ -158,12 +170,15 @@ function addnewQuote(){
 function randomQuote(){
 
     let getQuotes = localStorage.getItem('allQuotes');
-    let objQuotes = JSON.parse(getQuotes);
+    let objQuotes = JSON.parse(getQuotes)  || [];
     let len = objQuotes.length;
 
-    debugger;
+     if (len === 0) {
+        return;
+    }
 
-    let randomNum = Math.floor( Math.random() * len) +1;
+
+    let randomNum = Math.floor( Math.random() * len);
 
     let  appendQuote = document.querySelector('.motivation-container') ;
     appendQuote.innerHTML = `${objQuotes[randomNum].quote}`;
@@ -177,3 +192,71 @@ function randomQuote(){
 
 }
 
+
+
+if(!localStorage.getItem('likes')){
+    localStorage.setItem('likes', 0);
+}
+
+function likeQuote(){
+
+    let likes = Number(localStorage.getItem('likes'));
+
+    likes++;
+
+    localStorage.setItem('likes', likes);
+
+    document.querySelector('.likeCount').innerHTML = likes;
+}
+
+function loadLikeCount(){
+
+    let likes = Number(localStorage.getItem('likes')) || 0;
+
+    document.querySelector('.likeCount').innerHTML = likes;
+}
+
+
+if(!localStorage.getItem('skips')){
+    localStorage.setItem('skips', 0);
+}
+
+function skipQuoteFunc(){
+
+    let skips = Number(localStorage.getItem('skips'));
+
+    skips++;
+
+    localStorage.setItem('skips', skips);
+
+    document.querySelector('.skipCount').innerHTML = skips;
+
+    randomQuote();
+}
+
+function loadSkipCount(){
+
+    let skips = Number(localStorage.getItem('skips')) || 0;
+
+    document.querySelector('.skipCount').innerHTML = skips;
+}
+
+
+
+function showStats(){
+
+    let totalQuotes =
+        JSON.parse(localStorage.getItem('allQuotes')).length;
+
+    let likes =
+        Number(localStorage.getItem('likes')) || 0;
+
+    let skips =
+        Number(localStorage.getItem('skips')) || 0;
+
+    alert(
+        `Library Quotes : ${totalQuotes}
+Likes : ${likes}
+Skipped : ${skips}`
+    );
+}
