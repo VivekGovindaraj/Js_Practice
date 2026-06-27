@@ -1,7 +1,15 @@
 import mongoose from "mongoose";
-import dotenv from 'dotenv'
- 
-dotenv.config()
+import dotenv from "dotenv";
+import dns from "node:dns";
+
+dotenv.config();
+
+dns.setServers([
+  "1.1.1.1",
+  "8.8.8.8",
+]);
+
+
 const connectDB =async ()=> {
 
     try{
@@ -10,7 +18,8 @@ const connectDB =async ()=> {
 
        console.log(`DB CONNECTED SUCCESFULLY`)
     }catch(error){
-        console.error(`ERROR: ${error.message}`)
+        console.error(`ERROR: ${error}`)
+        process.exit(1);
 
 
     }
