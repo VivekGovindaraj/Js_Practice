@@ -128,7 +128,6 @@ export const deleteProduct = async(req,res) => {
 
     try{
 
-    
 
             const product = await Product.findById(req.params.id)
 
