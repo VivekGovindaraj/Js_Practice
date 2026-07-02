@@ -2,6 +2,7 @@ import express from "express";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken"
 import dotenv from 'dotenv'
+
 dotenv.config()
 
 
@@ -91,3 +92,23 @@ try{
     }
 
 }
+
+// get user profile
+
+// api/auth/profile
+
+export  const getUserProfile = async(req,res) => {
+
+try{
+     const user = await User.findById(req.user._id).select("-password")
+
+     res.json(user)
+}catch(error){
+    res.status(500).json({
+        message:error.message
+    })
+}
+   
+
+
+ }

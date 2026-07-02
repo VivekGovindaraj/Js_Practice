@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import authRoutes from './routes/authRoutes.js'
 import ProductRoutes from "./routes/productRoutes.js"
+import orderRoutes from './routes/orderRoutes.js'
 dotenv.config()
 connectDB()
 
@@ -11,6 +12,7 @@ app.use(express.json())
 
 app.use("/api/auth", authRoutes)
 app.use("/api/product", ProductRoutes)
+app.use("/api/order", orderRoutes)
 
 app.get("/", (req,res) => {
 
