@@ -49,7 +49,7 @@ export const createProduct = async(req,res) => {
             reviews,
             user
         })
-
+        console.log('passed route middleware')
         const createdProduct = await product.save()
 
         if(createdProduct){
