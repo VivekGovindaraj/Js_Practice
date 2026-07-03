@@ -54,3 +54,107 @@ export const createOrder = async(req, res) => {
       
     }
 }
+
+
+// get All orders
+// api  get api/orders
+
+export const getAllOrders = async(req,res) => {
+    try{
+        const orders =await Order.find({}).populate("user", "name email")
+
+        res.status(200).json({
+            success:true,
+            message:"Your Orders",
+            orders  
+        })
+    }catch(error){
+        res.status(500).json({
+            message:error.message
+        })
+    }
+    
+}
+
+// get my orders
+// api  get api/orders/myorders
+
+export const getMyOrders = async(req,res) => {
+    try{
+        const orders =await Order.find({user:req.user._id  })
+
+        res.status(200).json({
+            success:true,
+            message:"My Orders",
+            orders  
+        })
+    }catch(error){
+        res.status(500).json({
+            message:error.message
+        })
+    }
+    
+}
+
+
+// get orders by id
+// api  get api/orders/:id
+
+export const getOrdersById = async(req,res) => {
+    try{
+        const order =await Order.findById(req.params.id).populate('user', "name email")
+        if(order){
+             res.status(200).json({
+            success:true,
+            message:"ODERS BY ID",
+            order
+        })
+        }else{
+             res.status(404).json({
+            message:"Orders not found"
+        })
+        }
+       
+        
+    }catch(error){
+        res.status(500).json({
+            message:error.message
+        })
+    }
+    
+}
+
+
+// update order staus admin only
+// api  put api/orders/:id/status
+
+export const updateOrderStatus = async(req,res) => {
+    try{
+
+        const {status} = req.body
+        const order =await Order.findById(req.params.id).populate('user', "name email")
+        if(order){
+
+            order.orderStatus = status
+
+            let updatedProduct = await order.save()
+             res.status(200).json({
+            success:true,
+            message:"Order Updated",
+            
+            updatedProduct
+        })
+        }else{
+             res.status(404).json({
+            message:"Orders not found"
+        })
+        }
+       
+        
+    }catch(error){
+        res.status(500).json({
+            message:error.message
+        })
+    }
+    
+}
