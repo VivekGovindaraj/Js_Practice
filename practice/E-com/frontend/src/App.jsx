@@ -1,5 +1,6 @@
 import React from 'react'
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
+import {AuthProvider}from './context/AuthContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Cart from './pages/Cart'
@@ -9,6 +10,7 @@ const App = () => {
   return (
     <>
     <BrowserRouter>
+    <AuthProvider>
     <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<Login/>}/>
@@ -17,6 +19,7 @@ const App = () => {
         <Route path="/adminDashboard" element={<AdminDashboard/>}/>
         
     </Routes>
+    </AuthProvider>
     </BrowserRouter>
    
     </>
