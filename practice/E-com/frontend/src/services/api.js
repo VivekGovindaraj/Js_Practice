@@ -4,7 +4,7 @@ import { useTransition } from 'react';
 const API_URL = `http://localhost:4000/api`;
 
  const api = axios.create({
-    baseRUL:API_URL
+    baseURL:API_URL
 })
 
 api.interceptors.request.use(

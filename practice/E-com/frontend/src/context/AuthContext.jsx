@@ -1,45 +1,81 @@
 
-import {createContext, useContext, useState, useEffect, use} from 'react'
-import api from '../services/api.js';
-const AuthContext = createContext();
+    import {createContext, useContext, useState, useEffect, use} from 'react'
+    import api from '../services/api.js';
+    const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
+    export const AuthProvider = ({children}) => {
 
-    const [user,setUser] = useState(null);
-    const [laoding,setLoading] = useState(true);
+        const [user,setUser] = useState(null);
+        const [laoding,setLoading] = useState(true);
 
 
-    const register = async(name,email,password) => {
-        try{
-            const regData =await api.post('/auth/register')
+        const register = async(name,email,password) => {
+            try{
+                
+                const {data}= await api.post('/auth/register', {name,email,password})
 
-        console.log(regData)
-        }catch(error){
+            localStorage.setItem("token", data.token)
+            setUser(data)
+                return {
+                    success:true,
+                    data
+                }
+
+            
+            }catch (error) {
+            console.log(error.response?.data);
+
             return {
-                success:false,
-                error: error || "Registaration Failed"
+                success: false,
+                error: error.response?.data?.message || error.message || "Registration Failed",
+            }
+    }
+        }
+
+        const login = async (email,password) => {
+
+            try{
+    
+
+            let loginResponse = await api.post("/auth/login" , {email, password})
+            const {data} = loginResponse
+            localStorage.setItem("token", data.token)
+            setUser(data)
+
+            return{
+                success:true,
+                data
+            }
+
+
+            }catch (error) {
+            console.log(error.response?.data);
+
+            return {
+                success: false,
+                error: error.response?.data?.message || error.message || "Login Failed. check with email and password",
             }
         }
     }
-
-    const value = {
-        user,
-        register
+        const value = {
+            user,
+            register,
+            login
+        }
+            return (
+                <AuthContext.Provider value={value}>
+                    {children}
+                </AuthContext.Provider>
+            )
     }
-        return (
-            <AuthContext.Provider value={value}>
-                {children}
-            </AuthContext.Provider>
-        )
-}
 
-const useAuthContext = () =>{ 
-    let context = useContext(AuthContext)
+    const useAuthContext = () =>{ 
+        let context = useContext(AuthContext)
 
-    if(!context) {
-        throw new Error("Use Auth must be used within authporvider")
+        if(!context) {
+            throw new Error("Use Auth must be used within authporvider")
+        }
+        return context
     }
-    return context
-  }
-
-export default useAuthContext;
+    
+    export default useAuthContext;

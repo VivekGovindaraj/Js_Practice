@@ -26,7 +26,7 @@ res.json({
 export const registerUser = async (req,res) => {
 
     try{
-    const {name,password,email,isAdmin} = req.body
+    const {name,email,password,isAdmin} = req.body
 
     const userExist = await User.findOne({email})
     if(userExist) {
