@@ -57,10 +57,17 @@
             }
         }
     }
+
+
+    const logout = async(email,pasword) => {
+        localStorage.removeItem("token")
+        setUser(null)
+    }
         const value = {
             user,
             register,
-            login
+            login,
+            logout
         }
             return (
                 <AuthContext.Provider value={value}>

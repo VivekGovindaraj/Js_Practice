@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import useAuthContext from '../context/AuthContext'
 import { useNavigate, Link} from 'react-router-dom'
-import { use } from 'react';
+
 
 
 const Login = () => {
@@ -25,11 +25,12 @@ const Login = () => {
       navigate("/")
     }else{
       setError(logggedIn.error)
+      setLoading(false)
     }
   }
   return (
    <>
-   <div className="min-h-[calc(100vh-200px)] flex items-center justify-center px-4 py-12">
+   <div className="min-h-[calc(100vh-200px)] flex items-center justify-center px-4 py-24">
          <div className="w-full max-w-md">
            <div className="text-center mb-8">
              <h1 className="text-3xl font-bold text-slate-900">Welcome back</h1>
