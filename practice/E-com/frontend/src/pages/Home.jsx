@@ -72,7 +72,7 @@ const Home = () => {
               type="search"
               placeholder="Search products..."
               value={search}
-              // onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               className="flex-1 sm:w-64 px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             {/* <select

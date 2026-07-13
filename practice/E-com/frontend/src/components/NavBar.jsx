@@ -38,7 +38,7 @@ const NavBar = () => {
     )}
 
     {user?.isAdmin && (
-      <Link to="/admin"  onClick={closeMenu} className="hover:text-indigo-200 transition font-medium" >
+      <Link to="/adminDashboard"  onClick={closeMenu} className="hover:text-indigo-200 transition font-medium" >
         Admin
       </Link>
     )}
