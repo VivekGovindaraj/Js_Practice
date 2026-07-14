@@ -6,8 +6,16 @@
     export const AuthProvider = ({children}) => {
 
         const [user,setUser] = useState(null);
-        const [laoding,setLoading] = useState(true);
+        const [loading,setLoading] = useState(true);
 
+        useEffect(() => {
+            let token = localStorage.getItem("token")
+            if(token){
+                fetchUserProfile()
+            }else{
+                setLoading(false)
+            }
+        }, [])
 
         const register = async(name,email,password) => {
             try{
@@ -55,6 +63,17 @@
                 success: false,
                 error: error.response?.data?.message || error.message || "Login Failed. check with email and password",
             }
+        }
+    }
+
+    const fetchUserProfile = async () => {
+        try{
+           let {data} = await api.get("/auth/profile")
+           setUser(data)
+        }catch(error){
+            localStorage.removeItem("token")
+        }finally{
+
         }
     }
 

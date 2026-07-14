@@ -35,9 +35,7 @@ export const CartProvider = ({children}) => {
         console.log(product,quantity)
 
         setCartItems((prevCartItems) => {
-        console.log("Previous cart:", prevCartItems);
-        console.log("Product ID:", product._id);
-
+  
         const existingItem = prevCartItems.find(
             item => item.product === product._id
         );

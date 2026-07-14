@@ -21,6 +21,9 @@ export const getproducts = async(req,res) => {
 // post porduct only admin
 
 export const createProduct = async(req,res) => {
+     console.log(req.body);
+
+    console.log(req.user);
 
     try{
 
@@ -47,7 +50,7 @@ export const createProduct = async(req,res) => {
             stock,
             numOfReviews,
             reviews,
-            user
+            user:req.user._id
         })
         console.log('passed route middleware')
         const createdProduct = await product.save()
