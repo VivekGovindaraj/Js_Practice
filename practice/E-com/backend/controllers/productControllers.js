@@ -100,11 +100,12 @@ export const updateProduct = async(req,res) => {
             product.price =  price || product.price;
             product.description = description || product.description;
             product.category = category || product.category;
+            
             product.stock = stock || product.stock;
             product.seller = seller || product.seller;
 
             const updatedProduct = await product.save()
-            if(updateProduct){
+            if(updatedProduct){
                  res.status(200).json({
                 success:true,
                 message:"Product Updated Succesfully",
@@ -125,7 +126,7 @@ export const updateProduct = async(req,res) => {
 
 
 
-// update product put /product/:id
+// delete product put /product/:id
 
 export const deleteProduct = async(req,res) => {
 

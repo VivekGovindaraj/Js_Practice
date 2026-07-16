@@ -46,7 +46,7 @@
         const {data} = await api.get('/order');
         console.log(data)
 
-        setOrders(data)
+        setOrders(data.orders)
       }catch(error){
         console.log("Error occured while load products", error)
       }
@@ -55,6 +55,21 @@
 
     const handleInputChange = (e) => {
       setFormData({...formData, [e.target.name]:e.target.value})
+    }
+
+    const handleEdit = (product) => {
+
+      console.log(product)
+      setEditProduct(product)
+      setFormData({
+        name:product.name,
+      price:product.price,
+      description:product.description,
+      // image:"",
+      category:product.category,
+      stock:product.stock,
+      seller:product.seller
+      })
     }
 
     const handleDelete = async(productId) =>{
@@ -73,8 +88,14 @@
       e.preventDefault();
 
       try{
-        await api.post('/product' , formData)
-        console.log("Product created succesfully")
+        if(editProduct){
+          await api.put(`/product/${editProduct._id}`, formData)
+          alert("Product Updated Succesfully")
+        }else{
+             await api.post('/product' , formData)
+            alert("Product created succesfully")
+        }
+       
       }catch(error){
         
         console.log("Error happend while post product please check", error)
@@ -86,7 +107,7 @@
     }
 
     const resetForm = () => {
-
+      setEditProduct(null)
       setFormData({
         name:"",
       price:"",
@@ -97,6 +118,27 @@
       seller:""
       })
     }
+
+      const statusColors = {
+        Pending: "bg-slate-100 text-slate-700",
+        Processing: "bg-amber-100 text-amber-800",
+        Shipped: "bg-blue-100 text-blue-800",
+        Delivered: "bg-emerald-100 text-emerald-800",
+      };
+
+      const updateOrderStatus = async (orderId, status) => {
+
+        try{
+          await api.put(`/order/${orderId}/status`, {status});
+          alert("Orders status updated")
+          fetchOrders()
+        }catch(error){
+          console.log("Error Happend while update product", error)
+        }
+      }
+
+
+
     return (
       <>
         <div className="container mx-auto px-4 py-8 sm:py-12">
@@ -284,7 +326,7 @@
                         <td className="px-6 py-4">
                           <div className="flex gap-2">
                             <button
-                          
+                              onClick={() => {handleEdit(product)}}
                               className="px-3 py-1.5 bg-amber-100 text-amber-800 rounded-lg text-sm font-medium hover:bg-amber-200 transition"
                             >
                               Edit
@@ -306,80 +348,78 @@
           </div>
         )}
 
-        {activeTab === "orders" && (
-          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="min-w-full">
-                <thead className="bg-slate-50 border-b border-slate-100">
+         {activeTab === "orders" && (
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="min-w-full">
+              <thead className="bg-slate-50 border-b border-slate-100">
+                <tr>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
+                    Order ID
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
+                    Customer
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
+                    Total
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
+                    Status
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
+                    Update
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {orders.length === 0 ? (
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
-                      Order ID
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
-                      Customer
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
-                      Total
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
-                      Status
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
-                      Update
-                    </th>
+                    <td
+                      colSpan={5}
+                      className="px-6 py-12 text-center text-slate-500"
+                    >
+                      No orders yet
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {orders.length === 0 ? (
-                    <tr>
-                      <td
-                        colSpan={5}
-                        className="px-6 py-12 text-center text-slate-500"
-                      >
-                        No orders yet
+                ) : (
+                  orders?.map((order) => (
+                    <tr key={order?._id} className="hover:bg-slate-50/50">
+                      <td className="px-6 py-4 font-mono text-sm">
+                        #{order?._id.slice(-8).toUpperCase()}
+                      </td>
+                      <td className="px-6 py-4">
+                        {order?.user?.name || "Unknown"}
+                      </td>
+                      <td className="px-6 py-4 font-medium">
+                       &#8377;{order?.totalAmount?.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span
+                          className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusColors[order.orderStatus] || statusColors.Pending}`}
+                        >
+                          {order?.orderStatus}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <select
+                          onChange={(e) => {updateOrderStatus(order._id, e.target.value)}}
+                          value={order?.orderStatus}
+                          className="px-3 py-1.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                          <option value="Pending">Pending</option>
+                          <option value="Processing">Processing</option>
+                          <option value="Shipped">Shipped</option>
+                          <option value="Delivered">Delivered</option>
+                        </select>
                       </td>
                     </tr>
-                  ) : (
-                    orders.map((order) => (
-                      <tr key={order._id} className="hover:bg-slate-50/50">
-                        <td className="px-6 py-4 font-mono text-sm">
-                          #{order._id.slice(-8).toUpperCase()}
-                        </td>
-                        <td className="px-6 py-4">
-                          {order.user?.name || "Unknown"}
-                        </td>
-                        <td className="px-6 py-4 font-medium">
-                          ${order.totalPrice?.toFixed(2)}
-                        </td>
-                        <td className="px-6 py-4">
-                          <span
-                            className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusColors[order.status] || statusColors.Pending}`}
-                          >
-                            {order.status}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <select
-                            onChange={(e) =>
-                              updateOrderStatus(order._id, e.target.value)
-                            }
-                            value={order.status}
-                            className="px-3 py-1.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                          >
-                            <option value="Pending">Pending</option>
-                            <option value="Processing">Processing</option>
-                            <option value="Shipped">Shipped</option>
-                            <option value="Delivered">Delivered</option>
-                          </select>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
+                  ))
+                )}
+              </tbody>
+            </table>
           </div>
-        )}
+        </div>
+      )}
       </div>
       </>
     )

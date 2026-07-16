@@ -9,6 +9,8 @@ import Register from './pages/Register'
 import AdminDashboard from './pages/AdminDashboard'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
+import ProtectedRoute from './components/ProtectedRoute'
+
 
 
 
@@ -26,7 +28,11 @@ const App = () => {
                   <Route path="/login" element={<Login/>}/>
                   <Route path="/cart" element={<Cart/>}/>
                   <Route path="/register" element={<Register/>}/>
-                  <Route path="/adminDashboard" element={<AdminDashboard/>}/>
+                  <Route path="/adminDashboard" element={
+                    <ProtectedRoute requriedAdmin={true}>
+                      <AdminDashboard/>
+                    </ProtectedRoute>
+                    }/>
                   
               </Routes>
             </main>
