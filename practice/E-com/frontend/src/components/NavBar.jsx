@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuthContext from "../context/AuthContext";
+import useCart from "../context/CartContext";
+
 
 
 const NavBar = () => {
 
   const {user, logout} = useAuthContext();
+  const {cartItems} = useCart()
   const navigate = useNavigate()
   
 //   const [user] = useState(null);
@@ -27,7 +30,7 @@ const NavBar = () => {
         Cart
 
         <span className="absolute -top-2 -right-4 bg-amber-400 text-slate-900 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-          0
+         0
         </span>
       </Link>   
 

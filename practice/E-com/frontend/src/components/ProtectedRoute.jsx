@@ -6,7 +6,7 @@ const ProtectedRoute = ({children},requiredAdmin = false,) => {
 
     const { user, loading } = useAuthContext();
 
-    if (loading) {
+    if (loading) { 
         return (
             <div className="flex justify-center items-center h-64">
                 <div className="text-xl">Loading...</div>

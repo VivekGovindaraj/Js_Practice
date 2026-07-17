@@ -60,9 +60,31 @@ export const CartProvider = ({children}) => {
         });
     }
 
+    let removeFromCart = (product) => {
+
+        setCartItems( (prevCartItems) => {
+           return prevCartItems.filter( item => item.product !== product )
+        })
+    }
+
+    let updateQuantity = (product, quantity) => {
+
+        if(quantity <= 0){
+            removeFromCart(product)
+            return;
+        }
+
+        setCartItems( prevCartItems => {
+            return prevCartItems.map(item => item.product === product ? {...item, quantity} : item)
+        })
+    }
+
     let value = {
+        cartItems,
     addToCart,
-    loading
+    loading,
+    removeFromCart,
+    updateQuantity
     }
   return (
     <>

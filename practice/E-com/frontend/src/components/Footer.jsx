@@ -52,7 +52,7 @@ const Footer = () => (
         <div>
           <h4 className="text-white font-semibold mb-4">Support</h4>
           <ul className="space-y-2 text-sm text-slate-400">
-            <li>Free shipping on orders $50+</li>
+            <li>Free shipping on orders &#8377;2000</li>
             <li>30-day easy returns</li>
             <li>24/7 customer support</li>
           </ul>
