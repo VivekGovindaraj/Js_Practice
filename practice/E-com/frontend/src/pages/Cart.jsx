@@ -8,10 +8,48 @@ import useCart from '../context/CartContext.jsx'
 
 const Cart = () => {
 
-  const {cartItems, removeFromCart, updateQuantity} = useCart();
+  const {cartItems, removeFromCart, updateQuantity,  getTotalPrice, clearCart} = useCart();
   const {user} = useAuthContext();
   const navigate = useNavigate();
   const [processing, setProcessing] = useState(false);
+  
+
+  const handleCheckout = async() => {
+
+    if(!user){
+      navigate("/login")
+      return;
+    }
+
+    setProcessing(true)
+
+    const orderData = {
+      orderItems:cartItems,
+      itemsPrice: getTotalPrice(),
+      totalAmount:getTotalPrice(),
+      taxAmount:0,
+      shippingAmount:0,
+      paymentMethod:"COD",
+      shippingInfo:{
+        address: "2/27 Pookar Street, Melmoil",
+        city: "Vellore",
+        phoneNo: "7094025396",
+        zipcode: "632203",
+        country: "India"
+      }
+    }
+
+    try{
+      const {data} = await api.post("/order", orderData)
+      clearCart();
+      alert("Order Placed Succesfully")
+      navigate("/")
+    }catch(error){
+      console.log("order not placed", error)
+    }finally{
+      setProcessing(false)
+    }
+  }
 
   if(cartItems.length === 0){
 
@@ -79,9 +117,15 @@ const Cart = () => {
                           <span className="px-3 py-2 font-semibold min-w-[2.5rem] text-center">
                             {item.quantity}
                           </span>
-                          <button
-                            onClick={() =>
+                          <button 
+                            onClick={() =>{
+                               if(item.quantity >= item.stock){
+                                alert("Product quantity reached stock limit")
+                                return
+                              }
                               updateQuantity(item.product, item.quantity + 1)
+                             
+                            }
                              }
                             className="px-3 py-2 hover:bg-slate-50 transition"
                           >
@@ -89,7 +133,7 @@ const Cart = () => {
                           </button>
                         </div>
       
-                        <button
+                        <button 
                            onClick={() => removeFromCart(item.product)}
                           className="text-red-500 hover:text-red-700 text-sm font-medium transition"
                         >
@@ -111,18 +155,21 @@ const Cart = () => {
                     <div className="flex justify-between text-slate-600">
                       <span>Subtotal ({cartItems.length} items)</span>
                       <span className="font-medium text-slate-900">
-                        {/* &#8377; {getTotalPrice().toFixed(2)} */}
+                         &#8377; {getTotalPrice().toFixed(2)} 
                       </span>
                     </div>
-                    <div className="flex justify-between text-slate-600">
-                      <span>Shipping</span>
+                    <div className="flex justify-between items-center text-slate-600">
+                      <div>Shipping <br/>
+                      <div className='mt-2'>Free shipping on order above &#8377;2000</div>
+                      </div>
+                      
                       <span className="text-emerald-600 font-medium">Free</span>
                     </div>
                     <div className="border-t border-slate-100 pt-3 mt-3">
                       <div className="flex justify-between text-lg font-bold">
                         <span className="text-slate-900">Total</span>
                         <span className="text-indigo-600">
-                          {/* &#8377;{getTotalPrice().toFixed(2)} */}
+                           &#8377;{getTotalPrice().toFixed(2)} 
                         </span>
                       </div>
                     </div>
@@ -131,6 +178,7 @@ const Cart = () => {
                   <button
                     // onClick={handleCheckout}
                     disabled={processing}
+                    onClick={handleCheckout}
                     className={`w-full py-3.5 rounded-xl font-semibold mt-6 transition ${
                       processing
                         ? "bg-slate-300 text-slate-500 cursor-not-allowed"
@@ -139,6 +187,11 @@ const Cart = () => {
                   >
                     {processing ? "Processing..." : "Proceed to Checkout"}
                   </button>
+
+                  { !user && <div className="bg-yellow-100 border border-yellow-400 font-medium text-sm text-yellow-700 text-center py-2 rounded mt-2" role="alert">
+                 
+                    Please login to proceed Checkout.
+                  </div>}
       
                   <Link
                     to="/"

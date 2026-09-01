@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import api from '../services/api'
 import { ProductSkeleton } from '../components/LoaderUI';
 import ProductCard from '../components/ProductCard';
+
 
 
 
@@ -29,6 +30,53 @@ const Home = () => {
       setLoading(false)
     }
   }
+
+  const categories = useMemo(() => {
+      const cats = [...new Set((products.map((product) => product.category).filter(Boolean)))]
+
+      return ["all", ...cats]
+  }, [products])
+
+  const filteredProducts = useMemo(() => {
+
+    let result = [...products]
+    
+
+    if(search.trim()){
+      let q = search.toLowerCase();
+
+      result = result.filter( (product) =>  {
+        return(
+        product.name.toLowerCase().includes(q) ||
+        product.description.toLowerCase().includes(q) ||
+        product.category.toLowerCase().includes(q)
+        )
+      })
+    }
+
+    if(category !== 'all'){
+      result = result.filter( (product) => product.category === category)
+    }
+
+    switch(sortBy){
+      case "price-low" :
+        result.sort((a,b) => a.price - b.price)
+        break;
+      case "price-high":
+        result.sort((a,b) => b.price - a.price)
+        break;
+      case "name":
+        result.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      default:
+        result.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+    }
+    
+    return result
+  }, [products, search, category, sortBy])
+
   return (
     <>
      <div>
@@ -68,28 +116,29 @@ const Home = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+            
             <input
               type="search"
               placeholder="Search products..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 sm:w-64 px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="flex-1 sm:w-64 px-4 py-2.5 border border-slate-400 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow"
             />
-            {/* <select
+            <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow"
             >
               {categories.map((cat) => (
                 <option key={cat} value={cat}>
                   {cat === "all" ? "All Categories" : cat}
                 </option>
               ))}
-            </select> */}
+            </select>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow"
             >
               <option value="newest">Newest</option>
               <option value="price-low">Price: Low to High</option>
@@ -106,17 +155,17 @@ const Home = () => {
             ))}
           </div>
         ) 
-        // : filteredProducts.length === 0 ? (
-        //   <div className="text-center py-20">
-        //     <div className="text-6xl mb-4">🔍</div>
-        //     <h3 className="text-xl font-semibold text-slate-800 mb-2">
-        //       No products found
-        //     </h3>
-        //     <p className="text-slate-500">
-        //       Try adjusting your search or filter criteria
-        //     </p>
-        //   </div>
-        // ) 
+        : filteredProducts.length === 0 ? (
+          <div className="text-center py-20">
+            <div className="text-6xl mb-4">🔍</div>
+            <h3 className="text-xl font-semibold text-slate-800 mb-2">
+              No products found
+            </h3>
+            <p className="text-slate-500">
+              Try adjusting your search or filter criteria
+            </p>
+          </div>
+        ) 
         
         : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

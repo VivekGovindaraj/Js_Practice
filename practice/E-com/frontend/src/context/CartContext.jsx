@@ -51,7 +51,8 @@ export const CartProvider = ({children}) => {
                 name: product.name,
                 price: product.price,
                 image: product.images[0]?.url,
-                quantity
+                quantity,
+                stock:product.stock
                 }
             ]
         }
@@ -60,23 +61,40 @@ export const CartProvider = ({children}) => {
         });
     }
 
-    let removeFromCart = (product) => {
+    const removeFromCart = (product) => {
 
         setCartItems( (prevCartItems) => {
            return prevCartItems.filter( item => item.product !== product )
         })
     }
 
-    let updateQuantity = (product, quantity) => {
+    const updateQuantity = (product, quantity) => {
+
+        const productItem =  cartItems.find(item => item.product === product)
 
         if(quantity <= 0){
             removeFromCart(product)
             return;
         }
 
+        if(quantity > productItem.stock){
+            return ;
+        }
         setCartItems( prevCartItems => {
             return prevCartItems.map(item => item.product === product ? {...item, quantity} : item)
         })
+    }
+
+    const getTotalPrice= () => {
+        return cartItems.reduce( (total, item) => total + (item.price * item.quantity), 0 )
+    }
+
+    const getTotalItems = () => {
+        return cartItems.reduce((total, item) => total + (item.quantity), 0 )
+    }
+
+    const clearCart = () => {
+        setCartItems([])
     }
 
     let value = {
@@ -84,7 +102,10 @@ export const CartProvider = ({children}) => {
     addToCart,
     loading,
     removeFromCart,
-    updateQuantity
+    updateQuantity,
+    getTotalPrice,
+    getTotalItems,
+    clearCart
     }
   return (
     <>
