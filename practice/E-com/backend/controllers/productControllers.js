@@ -31,7 +31,7 @@ export const createProduct = async(req,res) => {
             price,
             description,
             rating,
-            images,
+            image,
             category,
             seller,
             stock,
@@ -39,12 +39,14 @@ export const createProduct = async(req,res) => {
             reviews,
             user} = req.body;
 
+            
+
         const product = new Product({
           name,
             price,
             description,
             rating,
-            images,
+            image,
             category,
             seller,
             stock,
@@ -83,7 +85,7 @@ export const updateProduct = async(req,res) => {
             price,
             description,
             rating,
-            images,
+            image,
             category,
             seller,
             stock,
@@ -100,7 +102,7 @@ export const updateProduct = async(req,res) => {
             product.price =  price || product.price;
             product.description = description || product.description;
             product.category = category || product.category;
-            
+            product.image = image || product.image
             product.stock = stock || product.stock;
             product.seller = seller || product.seller;
 

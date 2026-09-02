@@ -8,6 +8,9 @@ export const createOrder = async(req, res) => {
 
       try{
 
+         console.log("REQ USER:", req.user);
+        console.log("REQ BODY:", req.body);
+
         const {
           
             orderItems,
@@ -33,7 +36,7 @@ export const createOrder = async(req, res) => {
         })
        
         if(orderItems && orderItems.length === 0){
-            res.status(400).json({
+            return res.status(400).json({
                 messsage:"No Order Items"
             })
         }
@@ -48,6 +51,9 @@ export const createOrder = async(req, res) => {
         }
 
     }catch(error){
+
+        console.log("CREATE ORDER ERROR:", error);
+
         res.status(500).json({
             message:error.message
         })

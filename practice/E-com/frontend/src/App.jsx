@@ -1,4 +1,6 @@
 import React from 'react'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 import {AuthProvider}from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
@@ -15,12 +17,14 @@ import OrdersPage from './pages/Orders'
 
 
 
+
 const App = () => {
   return (
     <>
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
+        
           <div className="min-h-screen bg-slate-50 flex flex-col">
             <NavBar/>
             <main className='flex-1'>
@@ -40,9 +44,17 @@ const App = () => {
             </main>
             <Footer/>
           </div>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            pauseOnHover
+            draggable
+            theme="colored"
+          />
         </CartProvider>
-        
-      
       </AuthProvider>
     </BrowserRouter>
    

@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import useAuthContext from '../context/AuthContext'
 import { useNavigate, Link} from 'react-router-dom'
-
-
+import { showSuccess } from '../Utils/toast'
 
 const Login = () => {
 
@@ -22,9 +21,10 @@ const Login = () => {
     let logggedIn = await login(email, password)
 
     if(logggedIn.success){
+      showSuccess(`Welcome back, ${logggedIn.data.isAdmin ? 'Admin' :''} ${logggedIn.data.name}!`);
       navigate("/")
     }else{
-      setError(logggedIn.error)
+        showError(logggedIn.error);
       setLoading(false)
     }
   }

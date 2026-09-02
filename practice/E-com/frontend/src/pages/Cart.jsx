@@ -3,7 +3,7 @@ import api from '../services/api.js'
 import useAuthContext from '../context/AuthContext.jsx'
 import {Link, useNavigate} from 'react-router-dom'
 import useCart from '../context/CartContext.jsx'
-
+import {showSuccess,showInfo,showError,showWarning} from '../Utils/toast.js'
 
 
 const Cart = () => {
@@ -17,6 +17,7 @@ const Cart = () => {
   const handleCheckout = async() => {
 
     if(!user){
+
       navigate("/login")
       return;
     }
@@ -42,10 +43,14 @@ const Cart = () => {
     try{
       const {data} = await api.post("/order", orderData)
       clearCart();
-      alert("Order Placed Succesfully")
+      showSuccess("Order Placed Succesfully")
+     
       navigate("/")
     }catch(error){
+      showError("Failed to Place Order, PLease try again")
       console.log("order not placed", error)
+      
+    
     }finally{
       setProcessing(false)
     }
@@ -120,6 +125,7 @@ const Cart = () => {
                           <button 
                             onClick={() =>{
                                if(item.quantity >= item.stock){
+
                                 alert("Product quantity reached stock limit")
                                 return
                               }

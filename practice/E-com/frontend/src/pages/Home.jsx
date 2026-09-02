@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import api from '../services/api'
 import { ProductSkeleton } from '../components/LoaderUI';
 import ProductCard from '../components/ProductCard';
+import { showError } from '../Utils/toast';
 
 
 
@@ -25,6 +26,7 @@ const Home = () => {
       setProducts(data)
       console.log(data)
     }catch(error){
+      showError("Failed to laod Products")
       console.log("Error fetch products", error)
     }finally{
       setLoading(false)
@@ -170,7 +172,7 @@ const Home = () => {
         : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {
-              products?.map((product) => (
+              filteredProducts?.map((product) => (
                 <ProductCard product={product} key={product._id}/>
               ))
             }

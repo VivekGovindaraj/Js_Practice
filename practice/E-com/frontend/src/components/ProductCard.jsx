@@ -23,7 +23,8 @@ const ProductCard = ({product}) => {
    <>
    <Link className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl hover:border-indigo-100 transition-all duration-300 flex flex-col">
         <div className="relative overflow-hidden">
-            <img src={product.images[0]?.url} alt={product.name} loading='lazy'
+            {/* <img src={product.images[0]?.url} alt={product.name} loading='lazy' */}
+            <img src={product.image} alt={product.name} loading='lazy'
             className='w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500'/>
 
             {product.category && (

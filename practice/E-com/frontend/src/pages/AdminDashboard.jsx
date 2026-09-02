@@ -1,6 +1,8 @@
   import React, { useState, useEffect } from 'react'
   import api from '../services/api'
 
+  import {showSuccess,showInfo,showError,showWarning} from '../Utils/toast.js'
+
 
 
   const AdminDashboard = () => {
@@ -13,7 +15,7 @@
       name:"",
       price:"",
       description:"",
-      // image:"",
+      image:"",
       category:"",
       stock:"",
       seller:""
@@ -35,6 +37,7 @@
 
         setProducts(data)
       }catch(error){
+        showError("Failed to load Products");
         console.log("Error occured while load products", error)
       }
     }
@@ -48,6 +51,8 @@
 
         setOrders(data.orders)
       }catch(error){
+
+        showError("Failed to load Orders");
         console.log("Error occured while load products", error)
       }
     }
@@ -65,7 +70,7 @@
         name:product.name,
       price:product.price,
       description:product.description,
-      // image:"",
+       image:"",
       category:product.category,
       stock:product.stock,
       seller:product.seller
@@ -77,8 +82,10 @@
       if(window.confirm("Are you you want to delete this product?")){
         try{
           await api.delete(`/product/${productId}`)
+            showSuccess("Product deleted successfully!");
           fetchProducts()
         }catch(error){
+           showError("Failed to delete product");
           console.log("Eroor happend while delete product", error)
         }
       }
@@ -90,14 +97,15 @@
       try{
         if(editProduct){
           await api.put(`/product/${editProduct._id}`, formData)
-          alert("Product Updated Succesfully")
+          showSuccess("Product Updated Succesfully")
         }else{
              await api.post('/product' , formData)
-            alert("Product created succesfully")
+              showSuccess("Product created Succesfully")
+           
         }
        
       }catch(error){
-        
+        showError("Failed to save product");
         console.log("Error happend while post product please check", error)
       }
 
@@ -112,7 +120,7 @@
         name:"",
       price:"",
       description:"",
-      // image:"",
+      image:"",
       category:"",
       stock:"",
       seller:""
@@ -130,9 +138,10 @@
 
         try{
           await api.put(`/order/${orderId}/status`, {status});
-          alert("Orders status updated")
+           showSuccess(`Order status updated to ${status}`);
           fetchOrders()
         }catch(error){
+           showError("Failed to update order status");
           console.log("Error Happend while update product", error)
         }
       }
@@ -268,6 +277,17 @@
                     className="px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     required
                   />
+
+                  <input
+                    type="text"
+                    name="image"
+                    placeholder="Product Image URL"
+                    value={formData.image}
+                    onChange={handleInputChange}
+                   
+                    className="px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    required
+                  />
                 </div>
 
                 <textarea
@@ -330,7 +350,8 @@
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <img
-                              src={product.images?.[0]?.url}
+                              // src={product.images?.[0]?.url}
+                              src={product.image}
                               alt={product.name}
                               className="w-12 h-12 rounded-lg object-cover"
                             />
@@ -385,7 +406,8 @@
                         <div className="flex items-center gap-4">
 
                             <img
-                              src={product.images?.[0]?.url}
+                              src={product.images}
+                              // src={product.images?.[0]?.url}
                               alt={product.name}
                               className="w-16 h-16 rounded-xl object-cover flex-shrink-0"
                             />

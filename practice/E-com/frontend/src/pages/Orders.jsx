@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
 // import LoadingSpinner from "../components/LoadingSpinner";
-// import { showError } from "../utils/toast";
+import { showError } from "../utils/toast";
 
 const statusColors = {
   Pending: "bg-slate-100 text-slate-700",
@@ -25,6 +25,7 @@ const OrdersPage = () => {
       const { data } = await api.get("/order/myorders");
       setOrders(data.orders);
     } catch(error) {
+      showError("Failed to load your order, Please try again")
       console.log("Failed to load your orders", error);
     } finally {
       setLoading(false);

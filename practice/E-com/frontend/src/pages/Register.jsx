@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import useAuthContext from '../context/AuthContext'
 import {useNavigate, Link} from 'react-router-dom'
+import { showError ,showSuccess} from '../Utils/toast'
 
 const Register = () => {
 
@@ -20,12 +21,12 @@ const Register = () => {
 
    
     if(password != confirmPassword){
-      setError("Password and Confirm Password not same.. Please Match")
+      showError("Password and Confirm Password not same.. Please Match")
       return
     }
 
     if(password.length < 6){
-      setError("Password atleast minium 6 characrers required")
+      showError("Password atleast minium 6 characrers required")
       return
     }
 
@@ -34,9 +35,10 @@ const Register = () => {
     const userRegistaration = await register(name,email,password)
 
     if(userRegistaration.success){
+      showSuccess("Account created successfully!");
       navigate("/login")
     }else{
-      setError(userRegistaration.error)
+      showError(userRegistaration.error)
     }
     setLoading(false);
 
