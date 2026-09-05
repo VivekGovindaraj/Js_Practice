@@ -1,10 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import useCart from '../context/CartContext';
+import { showError, showInfo, showWarning, showSuccess } from '../Utils/toast';
 
 
 
 const ProductCard = ({product}) => {
+
+ 
 
       const outOfStock = product.stock === 0;  
       
@@ -13,15 +16,18 @@ const ProductCard = ({product}) => {
 
       const handleAddToCart = () => {
         if(outOfStock){
-            console.log("Product out of stock")
+            showWarning("Product out of stock")
+            // console.log("Product out of stock")
             return 
         }
         addToCart(product)
+        showSuccess("Product Added to Cart")
+
       }
     
   return (
    <>
-   <Link className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl hover:border-indigo-100 transition-all duration-300 flex flex-col">
+   <Link to={`/product/${product._id}`} className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl hover:border-indigo-100 transition-all duration-300 flex flex-col">
         <div className="relative overflow-hidden">
             {/* <img src={product.images[0]?.url} alt={product.name} loading='lazy' */}
             <img src={product.image} alt={product.name} loading='lazy'

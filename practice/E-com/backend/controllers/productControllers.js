@@ -17,6 +17,29 @@ export const getproducts = async(req,res) => {
      }
 }
 
+// get product by id
+export const getProductById = async(req,res) => {
+    try{
+        
+        const product = await Product.findById(req.params.id);
+
+        if(product){
+            res.json({
+                success:true,
+                product
+            })
+        }else{
+            res.status(404).json({
+                success:false,
+                message:"Product not found"
+            })
+        }
+     }
+     catch(error){
+        console.error(`Message : ${error.message}`)
+     }
+}
+
 
 // post porduct only admin
 

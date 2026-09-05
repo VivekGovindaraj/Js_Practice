@@ -13,6 +13,7 @@ import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
 import OrdersPage from './pages/Orders'
+import ProductDetails from './pages/ProductDetails';
 
 
 
@@ -31,6 +32,7 @@ const App = () => {
               <Routes>
                   <Route path="/" element={<Home/>}/>
                   <Route path="/login" element={<Login/>}/>
+                  <Route path="/product/:id" element={<ProductDetails />} />
                   <Route path="/cart" element={<Cart/>}/>
                   <Route path="/register" element={<Register/>}/>
                   <Route path="/orders" element={<OrdersPage/>}/>
